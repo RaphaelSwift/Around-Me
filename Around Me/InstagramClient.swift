@@ -24,21 +24,19 @@ class InstagramClient: NSObject {
         session = NSURLSession.sharedSession()
         super.init()
     }
-
-    //TODO: Persist the access token using NSKeyed Archiver
-    
     
     // We use a property observer to check when we have recieved the returned token from Instagram.
     var tokenValue: String? {
         didSet {
-            println(tokenValue)
+            
             self.saveAccessToken(tokenValue!)
             delegate?.didFinishAuthenticate!()
 
         }
     }
     
-    // Computed property that builds the authenticate url
+    
+    // Computed property that builds the authenticate url to retrieve the token/code
     var authenticateURL: String {
         
         let parameters: [String:AnyObject] = [
@@ -51,7 +49,7 @@ class InstagramClient: NSObject {
         return escapedURL
     }
     
-    
+
     
  /*
     //MARK: GET Method

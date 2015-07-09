@@ -48,7 +48,8 @@ class AuthenticateViewController: UIViewController, InstagramClientDelegate {
     
     // MARK: InstagramClientDelegate
     func didFinishAuthenticate() {
-        println("Logged in succesfully")
+        let myController = storyboard?.instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
+        self.presentViewController(myController, animated: true, completion: nil)
     }
 }
 
