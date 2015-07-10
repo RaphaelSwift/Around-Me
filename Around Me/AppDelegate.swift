@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let value = self.extractCode("\(url)")
         
         InstagramClient.sharedInstance().tokenValue = value
+        InstagramClient.sharedInstance().authenticated = true
         
         return true
     }

@@ -10,6 +10,9 @@ import Foundation
 
 extension InstagramClient {
     
-    
+    func getMediaFromInstagramAtGivenLocation() {
+        
+        
+    }
     
 }

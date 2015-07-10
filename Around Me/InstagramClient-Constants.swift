@@ -22,6 +22,17 @@ extension InstagramClient {
         static let ClientID = "client_id"
         static let RedirectURI = "redirect_uri"
         static let ResponseType = "response_type"
+        static let Distance = "distance"
+        static let Latitude = "lat"
+        static let Longitude = "lng"
+        static let TimeStampMin = "min_timestamp"
+        static let TimeStampMax = "max_timestamp"
+        static let AccessToken = "access_token"
+    }
+    
+    struct Methods {
+        static let MediaSearch = "/media/search"
+    
     }
     
 }

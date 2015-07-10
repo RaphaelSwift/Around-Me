@@ -25,16 +25,25 @@ class InstagramClient: NSObject {
         super.init()
     }
     
-    // We use a property observer to check when we have recieved the returned token from Instagram.
+    // Each time the token value is set, we store it in the Document directory, using NSKeyedArchiver
     var tokenValue: String? {
         didSet {
             
-            self.saveAccessToken(tokenValue!)
-            delegate?.didFinishAuthenticate!()
+            if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+                self.saveAccessToken(tokenValue!)
+            }
 
         }
     }
     
+    // We use a property observer to check when we have recieved the returned token from Instagram.
+    var authenticated : Bool? {
+        didSet {
+            if authenticated == true {
+                delegate?.didFinishAuthenticate!()
+            }
+        }
+    }
     
     // Computed property that builds the authenticate url to retrieve the token/code
     var authenticateURL: String {
@@ -49,21 +58,60 @@ class InstagramClient: NSObject {
         return escapedURL
     }
     
-
+    // FilePath to store the token
+    var filePath: String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return url.URLByAppendingPathComponent("accessToken").path!
+    }
     
- /*
+
     //MARK: GET Method
     
     func taskForGetMethod(parameters: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        //Set the parameters
+        //1. Set the parameters
         var mutableParameters = parameters
+        mutableParameters[UrlKeys.AccessToken] = self.tokenValue!
         
+        //2. Build the url
         
+        let urlString = Constants.BaseURL + Methods.MediaSearch + escapedParameters(mutableParameters)
+        let url = NSURL(string: urlString)!
         
-        return
+        //3. Make the request
+        
+        let request = NSURLRequest(URL: url)
+        
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            
+            if let error = error {
+                completionHandler(result: nil, error: error)
+                
+            } else {
+                
+                var jsonifyError:NSError? = nil
+                
+                //Parse the Data
+                if let parsedData: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments , error: &jsonifyError) {
+                    
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                        
+                    } else {
+                        completionHandler(result: parsedData, error: nil)
+                    }
+                }
+                
+            }
+            
+        }
+        
+        // Start the request
+        task.resume()
+        return task
     }
-   */ 
+
     
     
     //MARK: - Shared Instance
@@ -81,23 +129,11 @@ class InstagramClient: NSObject {
     
     func saveAccessToken(accessToken: String) {
         
-        var filePath: String {
-            let manager = NSFileManager.defaultManager()
-            let url = manager.URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-            return url.URLByAppendingPathComponent("accessToken").path!
-        }
-        
         NSKeyedArchiver.archiveRootObject(accessToken, toFile: filePath)
     }
     
     //Return true if an access token exists at this path
     func restoreAccessToken() -> Bool {
-        
-        var filePath: String {
-            let manager = NSFileManager.defaultManager()
-            let url = manager.URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-            return url.URLByAppendingPathComponent("accessToken").path!
-        }
         
         if let accessToken = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? String {
             self.tokenValue = accessToken

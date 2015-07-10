@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6E77C591B4FE19D004AA142 /* LastKnownMapRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */; };
 		F6EA0B1B1B4D01CE00E4088E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */; };
 		F6EA0B1D1B4D01CE00E4088E /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B1C1B4D01CE00E4088E /* AuthenticateViewController.swift */; };
 		F6EA0B201B4D01CE00E4088E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastKnownMapRegion.swift; sourceTree = "<group>"; };
 		F6EA0B151B4D01CE00E4088E /* Around Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Around Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6EA0B191B4D01CE00E4088E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */,
 				F6EA0B211B4D01CE00E4088E /* Images.xcassets */,
 				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
+				F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */,
 				F6EA0B181B4D01CE00E4088E /* Supporting Files */,
 				F6EA0B3C1B4D444D00E4088E /* Model */,
 			);
@@ -237,6 +240,7 @@
 				F6EA0B3E1B4D5DC500E4088E /* InstagramClient-Constants.swift in Sources */,
 				F6EA0B1B1B4D01CE00E4088E /* AppDelegate.swift in Sources */,
 				F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */,
+				F6E77C591B4FE19D004AA142 /* LastKnownMapRegion.swift in Sources */,
 				F6EA0B3B1B4D443300E4088E /* InstagramClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

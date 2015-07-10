@@ -16,7 +16,7 @@ class AuthenticateViewController: UIViewController, InstagramClientDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         
         InstagramClient.sharedInstance().delegate = self
-        println("loaded")
+        
     
     }
     
@@ -26,8 +26,6 @@ class AuthenticateViewController: UIViewController, InstagramClientDelegate {
         
         // Checks if an access token already exists. If it does, performs segue.
         if InstagramClient.sharedInstance().restoreAccessToken() {
-            //TODO: Performs segue
-            println("performs segue")
             
             let myController = storyboard?.instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
             self.presentViewController(myController, animated: true, completion: nil)
@@ -48,6 +46,7 @@ class AuthenticateViewController: UIViewController, InstagramClientDelegate {
     
     // MARK: InstagramClientDelegate
     func didFinishAuthenticate() {
+        
         let myController = storyboard?.instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
         self.presentViewController(myController, animated: true, completion: nil)
     }
