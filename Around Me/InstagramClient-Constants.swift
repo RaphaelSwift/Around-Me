@@ -30,6 +30,11 @@ extension InstagramClient {
         static let AccessToken = "access_token"
     }
     
+    struct ResponseKeys {
+        static let Location = "location"
+        static let Data = "data"
+    }
+    
     struct Methods {
         static let MediaSearch = "/media/search"
     

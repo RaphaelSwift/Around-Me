@@ -17,7 +17,6 @@ class AuthenticateViewController: UIViewController, InstagramClientDelegate {
         
         InstagramClient.sharedInstance().delegate = self
         
-    
     }
     
 

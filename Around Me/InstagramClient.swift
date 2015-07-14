@@ -32,7 +32,6 @@ class InstagramClient: NSObject {
             if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
                 self.saveAccessToken(tokenValue!)
             }
-
         }
     }
     
@@ -68,7 +67,7 @@ class InstagramClient: NSObject {
 
     //MARK: GET Method
     
-    func taskForGetMethod(parameters: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGetMethod(parameters: [String:AnyObject], method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         //1. Set the parameters
         var mutableParameters = parameters
@@ -76,7 +75,7 @@ class InstagramClient: NSObject {
         
         //2. Build the url
         
-        let urlString = Constants.BaseURL + Methods.MediaSearch + escapedParameters(mutableParameters)
+        let urlString = Constants.BaseURL + method + escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         
         //3. Make the request
@@ -108,6 +107,31 @@ class InstagramClient: NSObject {
         }
         
         // Start the request
+        task.resume()
+        return task
+    }
+    
+    
+    // Task Method to download an image from a given string url
+    
+    func taskForImage (imagePath: String, completionHandler: (imageData: NSData?, error: NSError?) -> Void ) -> NSURLSessionTask {
+        
+        let url = NSURL(string: imagePath)!
+        
+        let request = NSURLRequest(URL: url)
+        
+        //Make the request
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            
+            if let error = error {
+                completionHandler(imageData: nil, error: error)
+                
+            } else {
+                completionHandler(imageData: data, error: nil)
+            }
+            
+        }
+        
         task.resume()
         return task
     }
@@ -144,6 +168,11 @@ class InstagramClient: NSObject {
     return false
     }
     
+    //MARK: - Shared Cache
+    
+    struct Caches {
+        static let imageCache = ImageCache()
+    }
     
     //MARK: - Helpers
     

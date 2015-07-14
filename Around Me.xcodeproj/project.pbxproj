@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F6E77C591B4FE19D004AA142 /* LastKnownMapRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */; };
+		F6E77C5B1B515724004AA142 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C5A1B515724004AA142 /* Media.swift */; };
+		F6E77C601B515DC4004AA142 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C5E1B515DC4004AA142 /* Model.xcdatamodeld */; };
+		F6E77C621B515DDA004AA142 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C611B515DDA004AA142 /* CoreDataStackManager.swift */; };
 		F6EA0B1B1B4D01CE00E4088E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */; };
 		F6EA0B1D1B4D01CE00E4088E /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B1C1B4D01CE00E4088E /* AuthenticateViewController.swift */; };
 		F6EA0B201B4D01CE00E4088E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */; };
@@ -18,6 +21,7 @@
 		F6EA0B3E1B4D5DC500E4088E /* InstagramClient-Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */; };
 		F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */; };
 		F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */; };
+		F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +36,9 @@
 
 /* Begin PBXFileReference section */
 		F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastKnownMapRegion.swift; sourceTree = "<group>"; };
+		F6E77C5A1B515724004AA142 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		F6E77C5F1B515DC4004AA142 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		F6E77C611B515DDA004AA142 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		F6EA0B151B4D01CE00E4088E /* Around Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Around Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6EA0B191B4D01CE00E4088E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +53,7 @@
 		F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InstagramClient-Constants.swift"; sourceTree = "<group>"; };
 		F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InstagramClient-Convenience.swift"; sourceTree = "<group>"; };
 		F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +95,7 @@
 		F6EA0B171B4D01CE00E4088E /* Around Me */ = {
 			isa = PBXGroup;
 			children = (
+				F6E77C611B515DDA004AA142 /* CoreDataStackManager.swift */,
 				F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */,
 				F6EA0B1C1B4D01CE00E4088E /* AuthenticateViewController.swift */,
 				F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */,
@@ -95,7 +104,7 @@
 				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
 				F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */,
 				F6EA0B181B4D01CE00E4088E /* Supporting Files */,
-				F6EA0B3C1B4D444D00E4088E /* Model */,
+				F6EA0B3C1B4D444D00E4088E /* Instagram */,
 			);
 			path = "Around Me";
 			sourceTree = "<group>";
@@ -125,14 +134,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F6EA0B3C1B4D444D00E4088E /* Model */ = {
+		F6EA0B3C1B4D444D00E4088E /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				F6E77C5A1B515724004AA142 /* Media.swift */,
 				F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */,
 				F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */,
 				F6EA0B3A1B4D443300E4088E /* InstagramClient.swift */,
+				F6E77C5E1B515DC4004AA142 /* Model.xcdatamodeld */,
+				F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */,
 			);
-			name = Model;
+			name = Instagram;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,12 +247,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */,
 				F6EA0B1D1B4D01CE00E4088E /* AuthenticateViewController.swift in Sources */,
 				F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */,
 				F6EA0B3E1B4D5DC500E4088E /* InstagramClient-Constants.swift in Sources */,
+				F6E77C621B515DDA004AA142 /* CoreDataStackManager.swift in Sources */,
 				F6EA0B1B1B4D01CE00E4088E /* AppDelegate.swift in Sources */,
+				F6E77C601B515DC4004AA142 /* Model.xcdatamodeld in Sources */,
 				F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */,
 				F6E77C591B4FE19D004AA142 /* LastKnownMapRegion.swift in Sources */,
+				F6E77C5B1B515724004AA142 /* Media.swift in Sources */,
 				F6EA0B3B1B4D443300E4088E /* InstagramClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,6 +467,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F6E77C5E1B515DC4004AA142 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F6E77C5F1B515DC4004AA142 /* Model.xcdatamodel */,
+			);
+			currentVersion = F6E77C5F1B515DC4004AA142 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F6EA0B0D1B4D01CE00E4088E /* Project object */;
 }
