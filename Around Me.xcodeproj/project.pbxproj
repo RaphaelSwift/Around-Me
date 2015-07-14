@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6E497841B54F0270058EF44 /* MediaCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E497831B54F0270058EF44 /* MediaCollectionViewController.swift */; };
+		F6E497861B54FD370058EF44 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */; };
 		F6E77C591B4FE19D004AA142 /* LastKnownMapRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */; };
 		F6E77C5B1B515724004AA142 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C5A1B515724004AA142 /* Media.swift */; };
 		F6E77C601B515DC4004AA142 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6E77C5E1B515DC4004AA142 /* Model.xcdatamodeld */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F6E497831B54F0270058EF44 /* MediaCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewController.swift; sourceTree = "<group>"; };
+		F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastKnownMapRegion.swift; sourceTree = "<group>"; };
 		F6E77C5A1B515724004AA142 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		F6E77C5F1B515DC4004AA142 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 				F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */,
 				F6EA0B1C1B4D01CE00E4088E /* AuthenticateViewController.swift */,
 				F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */,
+				F6E497831B54F0270058EF44 /* MediaCollectionViewController.swift */,
+				F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */,
 				F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */,
 				F6EA0B211B4D01CE00E4088E /* Images.xcassets */,
 				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
@@ -250,8 +256,10 @@
 				F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */,
 				F6EA0B1D1B4D01CE00E4088E /* AuthenticateViewController.swift in Sources */,
 				F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */,
+				F6E497861B54FD370058EF44 /* MediaCollectionViewCell.swift in Sources */,
 				F6EA0B3E1B4D5DC500E4088E /* InstagramClient-Constants.swift in Sources */,
 				F6E77C621B515DDA004AA142 /* CoreDataStackManager.swift in Sources */,
+				F6E497841B54F0270058EF44 /* MediaCollectionViewController.swift in Sources */,
 				F6EA0B1B1B4D01CE00E4088E /* AppDelegate.swift in Sources */,
 				F6E77C601B515DC4004AA142 /* Model.xcdatamodeld in Sources */,
 				F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */,
