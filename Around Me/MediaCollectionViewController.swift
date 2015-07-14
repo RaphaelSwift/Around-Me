@@ -13,6 +13,11 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
 
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     
+    // Create 3 empty arrays that will keep track of insertions, deletions, updates
+    var insertedIndexPaths : [NSIndexPath]!
+    var deletedIndexPaths : [NSIndexPath]!
+    var updatedIndexPaths : [NSIndexPath]!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +33,6 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         if let fetchError = fetchError {
             //Handle error here
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -127,6 +131,73 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         
     }
     
+    
+    
+    //MARK: - Add NSFetchedResultsControllerDelegate methods
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        
+        // We create the three empty array to handle changes in the collection view
+        insertedIndexPaths = [NSIndexPath]()
+        deletedIndexPaths = [NSIndexPath]()
+        updatedIndexPaths = [NSIndexPath]()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        //Do nothing for the moment.
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+            
+        case .Insert:
+            // Insert the corresponding new indexpath in the array
+            insertedIndexPaths.append(newIndexPath!)
+            
+        case .Delete:
+            // Insert the indexpath to delete in the array
+            deletedIndexPaths.append(indexPath!)
+            
+        case .Update:
+            // Insert the indexpath to be udpated in the array
+            updatedIndexPaths.append(indexPath!)
+            
+        case .Move:
+            break
+            
+        default :
+            break
+            
+        }
+        
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        // loop through the arrays and perform the changes
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            self.mediaCollectionView.performBatchUpdates({() -> Void in
+                
+                for indexPath in self.insertedIndexPaths {
+                    self.mediaCollectionView.insertItemsAtIndexPaths([indexPath])
+                }
+                
+                for indexPath in self.deletedIndexPaths {
+                    self.mediaCollectionView.deleteItemsAtIndexPaths([indexPath])
+                }
+                
+                for indexPath in self.updatedIndexPaths {
+                    self.mediaCollectionView.reloadItemsAtIndexPaths([indexPath])
+                }
+                
+                }, completion: nil)
+            
+        }
+        
+    }
+
     
     
 

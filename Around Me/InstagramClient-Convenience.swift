@@ -29,7 +29,6 @@ extension InstagramClient {
                 if let mediaData = data as? [String:AnyObject], let mediaDatas = mediaData[ResponseKeys.Data] as? [[String: AnyObject]]  {
                     
                     //map the array of dicionary to Media managed objects
-                    
                     var mediaDatas = mediaDatas.map() { (dictionary: [String:AnyObject]) -> Media in
                         
                         let media = Media(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
