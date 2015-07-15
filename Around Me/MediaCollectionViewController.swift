@@ -106,6 +106,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     func configureCell(mediaImageCell: MediaCollectionViewCell, media: Media) {
         
         mediaImageCell.imageView.image = UIImage(named: "Placeholder")
+        mediaImageCell.timeStampLabel.text = media.createdTime
+        mediaImageCell.locationLabel.text =  "\(media.latitude) \(media.longitude)"
         
         // If the image has already been downloaded, display it
         if let photo = media.photoImage {
@@ -174,8 +176,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        // loop through the arrays and perform the changes
         
+        // loop through the arrays and perform the changes all at once
         dispatch_async(dispatch_get_main_queue()) {
             
             self.mediaCollectionView.performBatchUpdates({() -> Void in

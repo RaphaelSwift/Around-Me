@@ -118,7 +118,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let userCoordinate = mapView.userLocation.location
         centerMapOnLocation(userCoordinate)
         
-        InstagramClient.sharedInstance().getMediaFromInstagramAtGivenLocation(distanceInMeters: self.searchRadius, latitude: mapView.userLocation.coordinate.latitude, longitude: mapView.userLocation.coordinate.longitude) { success, error in
+        // Here we ll get only the new media, that were posted after our latest media item. If minTimeStamp is nil, it ll covers the last 5 days.
+        InstagramClient.sharedInstance().getMediaFromInstagramAtGivenLocation(distanceInMeters: self.searchRadius, latitude: mapView.userLocation.coordinate.latitude, longitude: mapView.userLocation.coordinate.longitude, minTimeStamp: getLatestCreatedTime()) { success, error in
             
             if success {
                 //TODO: Do anything ?
@@ -137,6 +138,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         self.mapView.addOverlay(circle)
         
         self.currentOverlay = circle
+        
+        // Finally, delete all the points that are not within the overlay
+        deleteOutOfRangeMediaObjects(self.currentOverlay!)
+
     }
     
     // Create a circle renderer for rendering our shape
@@ -147,7 +152,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             aRenderer.fillColor = UIColor.cyanColor().colorWithAlphaComponent(0.1)
             aRenderer.strokeColor = UIColor.blueColor().colorWithAlphaComponent(0.7)
             aRenderer.lineWidth = 1.5
-            
+        
             return aRenderer
         }
         
@@ -256,5 +261,44 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     
+    //MARK: - Helpers
+    
+    
+    // This method retrieve the created time of the latest media
+    func getLatestCreatedTime() -> String? {
+        
+        //As the fetched objects are sorted by creation time in a descending order, we can simply get the first object and retrieve the created time
+        
+        if let media = fetchedResultController.fetchedObjects?.first as? Media {
+            let createdTime = media.createdTime
+            return createdTime
+        }
+        
+        return nil
+    }
+    
+    // Delete media objects that are not within our search radius
+    func deleteOutOfRangeMediaObjects(overlay: MKOverlay) {
+        
+        let circleRenderer = MKCircleRenderer(overlay: overlay)
+        
+        if let fetchedObjects = fetchedResultController.fetchedObjects as? [Media] {
+            
+            // Loop through all fetched media objects and delete the ones which coordinates are not within the overlay
+            for media in fetchedObjects {
+                
+                let mapPoint = MKMapPointForCoordinate(media.coordinate)
+                let circleViewPoint = circleRenderer.pointForMapPoint(mapPoint)
+            
+                let mapCoordinateIsInCircle = CGPathContainsPoint(circleRenderer.path, nil, circleViewPoint, false)
+            
+                if !mapCoordinateIsInCircle  {
+                sharedContext.deleteObject(media)
+                
+                }
+            }
+        }
+    
+    }
 
 }

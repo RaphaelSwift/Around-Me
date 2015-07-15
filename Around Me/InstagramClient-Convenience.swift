@@ -11,7 +11,7 @@ import UIKit
 
 extension InstagramClient {
     
-    func getMediaFromInstagramAtGivenLocation(distanceInMeters distance: Int, latitude: Double, longitude: Double, completionHandler: (success: Bool, error: NSError?) -> Void ) {
+    func getMediaFromInstagramAtGivenLocation(distanceInMeters distance: Int, latitude: Double, longitude: Double, minTimeStamp: String?, completionHandler: (success: Bool, error: NSError?) -> Void ) {
         
         let method = Methods.MediaSearch
         
@@ -20,6 +20,10 @@ extension InstagramClient {
             InstagramClient.UrlKeys.Longitude: longitude,
             InstagramClient.UrlKeys.Distance: distance,
         ]
+        
+        if let minTimeStampString = minTimeStamp {
+            parameters[InstagramClient.UrlKeys.MinTimeStamp] = minTimeStampString
+        }
         
         taskForGetMethod(parameters, method: method) { data, error in
             if let error = error {

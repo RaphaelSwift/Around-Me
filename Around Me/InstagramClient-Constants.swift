@@ -25,9 +25,8 @@ extension InstagramClient {
         static let Distance = "distance"
         static let Latitude = "lat"
         static let Longitude = "lng"
-        static let TimeStampMin = "min_timestamp"
-        static let TimeStampMax = "max_timestamp"
         static let AccessToken = "access_token"
+        static let MinTimeStamp = "min_timestamp"
     }
     
     struct ResponseKeys {
