@@ -178,13 +178,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             if pinView == nil {
                 pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MediaPin")
-                self.configurePinView(pinView, media: annotation as! Media)
+                
+                pinView?.image = UIImage(named: "Placeholder")
+                
+                //self.configurePinView(pinView, media: annotation as! Media)
 
             }
             
             else {
                 pinView?.annotation = annotation
             }
+            
+            self.configurePinView(pinView, media: annotation as! Media)
+            
             return pinView
         }
         
@@ -193,7 +199,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     
     func configurePinView(pinView: MKPinAnnotationView?, media: Media) {
-        pinView?.image = UIImage(named: "Placeholder")
         
         // If the image has already been downloaded, display it
         if let photo = media.photoImage {
