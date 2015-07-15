@@ -31,9 +31,18 @@ extension InstagramClient {
             }
             else {
                 if let mediaData = data as? [String:AnyObject], let mediaDatas = mediaData[ResponseKeys.Data] as? [[String: AnyObject]]  {
-                    
+
                     //map the array of dicionary to Media managed objects
-                    var mediaDatas = mediaDatas.map() { (dictionary: [String:AnyObject]) -> Media in
+                    var mediaDatas = mediaDatas.map() { (dictionary: [String:AnyObject]) -> Media? in
+                        
+                        // According to Instagram doc, it should return items taken only later than the specified timeStamp. However, I noticed that if it doesn't have any new items, it returns the first or second latest media item, which we want to avoid in our case because it creates duplications. Therefore, we have to check and add only the object if it's more recent than the specified timestamp.
+                        if let createdTimeOfReturnedMediaObject = dictionary[ResponseKeys.CreatedTime] as? String {
+                            if let minTimeStampMediaObject = minTimeStamp{
+                                if createdTimeOfReturnedMediaObject <= minTimeStampMediaObject {
+                                    return nil
+                                }
+                            }
+                        }
                         
                         let media = Media(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
                         

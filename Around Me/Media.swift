@@ -24,6 +24,7 @@ class Media: NSManagedObject, MKAnnotation {
         static let StandardResolution = "standard_resolution"
         static let Url = "url"
         static let CreatedTime = "created_time"
+        static let Id = "id"
     }
     
     @NSManaged var createdTime: String
@@ -32,6 +33,7 @@ class Media: NSManagedObject, MKAnnotation {
     @NSManaged var imagePathThumbnail: String
     @NSManaged var imagePathLowRes: String
     @NSManaged var imagePathStandardRes: String
+    @NSManaged var id: String
     
     
     
@@ -62,6 +64,9 @@ class Media: NSManagedObject, MKAnnotation {
         
         // Retrieve the created time
         createdTime = dictionary[Media.Keys.CreatedTime] as! String
+        
+        // Retrieve the id
+        id = dictionary[Media.Keys.Id] as! String
     
     }
     
@@ -72,6 +77,16 @@ class Media: NSManagedObject, MKAnnotation {
         return coord
     }
     
+    
+    // When the context is saved, we want to check if the object has been deleted, if it has effectively been, we want to remove it from the cache and document directory as well
+    override func didSave() {
+        
+        if self.deleted {
+            InstagramClient.Caches.imageCache.deleteImage(imagePathThumbnail)
+            InstagramClient.Caches.imageCache.deleteImage(imagePathLowRes)
+            InstagramClient.Caches.imageCache.deleteImage(imagePathStandardRes)
+        }
+    }
     
     var photoImage: UIImage? {
         

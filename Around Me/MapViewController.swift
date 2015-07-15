@@ -118,15 +118,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let userCoordinate = mapView.userLocation.location
         centerMapOnLocation(userCoordinate)
         
-        // Here we ll get only the new media, that were posted after our latest media item. If minTimeStamp is nil, it ll covers the last 5 days.
-        InstagramClient.sharedInstance().getMediaFromInstagramAtGivenLocation(distanceInMeters: self.searchRadius, latitude: mapView.userLocation.coordinate.latitude, longitude: mapView.userLocation.coordinate.longitude, minTimeStamp: getLatestCreatedTime()) { success, error in
-            
-            if success {
-                //TODO: Do anything ?
-            }
-        }
-        
-        // Each time the location of the user changes, adjust the overlay
+        // And adjust the overlay
         
         //1. Remove the existing overlay
         if let currentOverlay = currentOverlay {
@@ -138,10 +130,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         self.mapView.addOverlay(circle)
         
         self.currentOverlay = circle
-        
+        println(self.fetchedResultController.fetchedObjects?.count)
         // Finally, delete all the points that are not within the overlay
         deleteOutOfRangeMediaObjects(self.currentOverlay!)
+        println(self.fetchedResultController.fetchedObjects?.count)
+        
+        // Here we get only the new media, that were posted after our latest media item. If minTimeStamp is nil, it ll covers the last 5 days.
+        InstagramClient.sharedInstance().getMediaFromInstagramAtGivenLocation(distanceInMeters: self.searchRadius, latitude: mapView.userLocation.coordinate.latitude, longitude: mapView.userLocation.coordinate.longitude, minTimeStamp: self.getLatestCreatedTime()) { success, error in
+            
+            if success {
+                //TODO: Do anything ?
+            }
 
+        }
+        
     }
     
     // Create a circle renderer for rendering our shape
@@ -177,7 +179,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             if pinView == nil {
                 pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MediaPin")
                 self.configurePinView(pinView, media: annotation as! Media)
-                //TODO: download the image, store it , display it
 
             }
             
@@ -206,7 +207,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     //Handle error
                 }
                 else {
-                    
                     //And display it
                     dispatch_async(dispatch_get_main_queue()) {
                         pinView?.image = image
@@ -245,9 +245,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             }
         
         case .Delete:
-            
             dispatch_async(dispatch_get_main_queue()) {
-            self.mapView.addAnnotation(anObject as! Media)
+            self.mapView.removeAnnotation(anObject as! Media)
             }
             
         case .Update:
@@ -257,7 +256,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             return
             
         }
-        
     }
     
     
@@ -292,13 +290,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
                 let mapCoordinateIsInCircle = CGPathContainsPoint(circleRenderer.path, nil, circleViewPoint, false)
             
-                if !mapCoordinateIsInCircle  {
-                sharedContext.deleteObject(media)
-                
+                if !mapCoordinateIsInCircle {
+                        self.sharedContext.deleteObject(media)
                 }
             }
         }
-    
+        
+        //Save the context (ie. commit the changes)
+        CoreDataStackManager.sharedInstance().saveContext()
+        
     }
 
 }

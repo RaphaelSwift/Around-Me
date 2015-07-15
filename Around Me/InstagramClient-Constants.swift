@@ -32,6 +32,8 @@ extension InstagramClient {
     struct ResponseKeys {
         static let Location = "location"
         static let Data = "data"
+        static let CreatedTime = "created_time"
+        static let Id = "id"
     }
     
     struct Methods {
