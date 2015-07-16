@@ -16,13 +16,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     var locationManager = CLLocationManager()
     
-    // Set the region radius
-    let regionRadius: CLLocationDistance = 3000
-    
-    var searchRadius: Int {
-        let radius = Int(regionRadius / 1.5)
-        return radius
-    }
+    let refreshRate = 20.0
     
     // The overlay currently displayed
     var currentOverlay: MKOverlay?
@@ -61,6 +55,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // Add the media locations to the map
         self.mapView.addAnnotations(fetchedResultController.fetchedObjects)
         
+        // Set a refresh timer
+        let timer = NSTimer.scheduledTimerWithTimeInterval(20.0, target: self, selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: true)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -86,7 +83,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     
     func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, InstagramClient.sharedInstance().regionRadius, InstagramClient.sharedInstance().regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
         
         // Save the region
@@ -115,7 +112,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
         // Each time the location of the user changes, center the map on the user
-        let userCoordinate = mapView.userLocation.location
+        let userCoordinate = userLocation.location
         centerMapOnLocation(userCoordinate)
         
         // And adjust the overlay
@@ -126,23 +123,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
         //2. Add a new overlay with the new user location
-        let circle = MKCircle(centerCoordinate: CLLocationCoordinate2D(latitude: userCoordinate.coordinate.latitude, longitude: userCoordinate.coordinate.longitude), radius: Double(self.searchRadius))
+        let circle = MKCircle(centerCoordinate: CLLocationCoordinate2D(latitude: userCoordinate.coordinate.latitude, longitude: userCoordinate.coordinate.longitude), radius: Double(InstagramClient.sharedInstance().searchRadius))
         self.mapView.addOverlay(circle)
         
         self.currentOverlay = circle
-        println(self.fetchedResultController.fetchedObjects?.count)
+
         // Finally, delete all the points that are not within the overlay
         deleteOutOfRangeMediaObjects(self.currentOverlay!)
-        println(self.fetchedResultController.fetchedObjects?.count)
         
-        // Here we get only the new media, that were posted after our latest media item. If minTimeStamp is nil, it ll covers the last 5 days.
-        InstagramClient.sharedInstance().getMediaFromInstagramAtGivenLocation(distanceInMeters: self.searchRadius, latitude: mapView.userLocation.coordinate.latitude, longitude: mapView.userLocation.coordinate.longitude, minTimeStamp: self.getLatestCreatedTime()) { success, error in
-            
-            if success {
-                //TODO: Do anything ?
-            }
-
-        }
+        // Update our model
+        InstagramClient.sharedInstance().userLatitude = userCoordinate.coordinate.latitude
+        InstagramClient.sharedInstance().userLongitude = userCoordinate.coordinate.longitude
+        
+        // Then retrieve new media, that were posted after our latest media item. If minTimeStamp is nil, it ll covers the last 5 days.
+       self.fetchRecentDataFromInstagram()
         
     }
     
@@ -231,6 +225,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     //MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
             mapView.showsUserLocation = true
             
@@ -255,7 +250,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             }
             
         case .Update:
-            return
+            dispatch_async(dispatch_get_main_queue()) {
+                self.mapView.addAnnotation(anObject as! Media)
+            }
             
         default:
             return
@@ -264,7 +261,22 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     
-    //MARK: - Helpers
+    //MARK: - Helpers & convenience
+    
+    
+    func fetchRecentDataFromInstagram() {
+
+        InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
+            
+            if success {
+                
+            }
+            
+            if let error = error {
+                //handle error here
+            }
+        }
+    }
     
     
     // This method retrieve the created time of the latest media
@@ -305,5 +317,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         CoreDataStackManager.sharedInstance().saveContext()
         
     }
+    
+    
 
+    
 }

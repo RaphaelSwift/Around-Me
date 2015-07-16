@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 @objc protocol InstagramClientDelegate {
     
@@ -16,6 +17,19 @@ import Foundation
 class InstagramClient: NSObject {
     
     var delegate:InstagramClientDelegate?
+    
+    // Set the region radius
+    let regionRadius: CLLocationDistance = 3000
+    
+    // Set the searchRadius
+    var searchRadius: Int {
+        let radius = Int(regionRadius / 1.5)
+        return radius
+    }
+    
+    var userLatitude: Double?
+    var userLongitude: Double?
+    
     
     // Shared Session
     var session: NSURLSession

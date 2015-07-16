@@ -11,6 +11,26 @@ import UIKit
 
 extension InstagramClient {
     
+    func getMediaAtUserCoordinateFromInstagram(minTimeStamp: String?, completionHandler: (success: Bool, error: NSError?) -> Void) {
+        
+        if let userLatitude = userLatitude, userLongitude = userLongitude {
+        
+            getMediaFromInstagramAtGivenLocation(distanceInMeters: searchRadius, latitude: userLatitude, longitude: userLongitude, minTimeStamp: minTimeStamp) { success, error in
+            
+                if let error = error {
+                    completionHandler(success: false, error: error)
+                }
+                else {
+                    completionHandler(success: true, error: nil)
+                }
+            }
+        }
+        
+        else {
+            completionHandler(success: false, error: NSError(domain: "user", code: 100, userInfo: [NSLocalizedDescriptionKey:"User location is nil"]))
+        }
+    }
+    
     func getMediaFromInstagramAtGivenLocation(distanceInMeters distance: Int, latitude: Double, longitude: Double, minTimeStamp: String?, completionHandler: (success: Bool, error: NSError?) -> Void ) {
         
         let method = Methods.MediaSearch

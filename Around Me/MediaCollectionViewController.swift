@@ -13,6 +13,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
 
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     
+    let refreshControl = UIRefreshControl()
+    
     // Create 3 empty arrays that will keep track of insertions, deletions, updates
     var insertedIndexPaths : [NSIndexPath]!
     var deletedIndexPaths : [NSIndexPath]!
@@ -33,6 +35,14 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         if let fetchError = fetchError {
             //Handle error here
         }
+        
+        // We want to be able to refresh even if the collection is not big enough to have an active scrollbar
+        self.mediaCollectionView.alwaysBounceVertical = true
+        
+        // Implement a refresh when the user pull buttom on the collection view.
+        refreshControl.addTarget(self, action: "fetchRecentDataFromInstagram", forControlEvents: UIControlEvents.ValueChanged)
+        self.mediaCollectionView.addSubview(refreshControl)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,6 +144,26 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     
+    //MARK: UIRefreshControl
+    
+    func fetchRecentDataFromInstagram() {
+        InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
+            
+            if success {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.refreshControl.endRefreshing()
+                }
+            }
+            
+            if let error = error {
+                //handle error here
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.refreshControl.endRefreshing()
+                }
+            }
+        }
+    }
+    
     
     //MARK: - Add NSFetchedResultsControllerDelegate methods
     
@@ -200,7 +230,21 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         
     }
 
+
+    //MARK: - Helpers
     
     
+    // This method retrieve the created time of the latest media
+    func getLatestCreatedTime() -> String? {
+        
+        //As the fetched objects are sorted by creation time in a descending order, we can simply get the first object and retrieve the created time
+        
+        if let media = fetchedResultController.fetchedObjects?.first as? Media {
+            let createdTime = media.createdTime
+            return createdTime
+        }
+        
+        return nil
+    }
 
 }
