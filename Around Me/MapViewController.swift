@@ -18,6 +18,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     let refreshRate = 20.0
     
+    @IBOutlet weak var searchRadiusSlider: UISlider!
+    
     // The overlay currently displayed
     var currentOverlay: MKOverlay?
     
@@ -33,6 +35,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     //MARK: - Lifecyle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchRadiusSlider.enabled = false
         
         //Set the delegates
         locationManager.delegate = self
@@ -56,7 +60,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         self.mapView.addAnnotations(fetchedResultController.fetchedObjects)
         
         // Set a refresh timer
-        let timer = NSTimer.scheduledTimerWithTimeInterval(20.0, target: self, selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: true)
+        let timer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self, selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: true)
         
     }
     
@@ -111,6 +115,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
+        if !searchRadiusSlider.enabled {
+            searchRadiusSlider.enabled = true
+        }
+        
         // Each time the location of the user changes, center the map on the user
         let userCoordinate = userLocation.location
         centerMapOnLocation(userCoordinate)
@@ -123,13 +131,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
         //2. Add a new overlay with the new user location
-        let circle = MKCircle(centerCoordinate: CLLocationCoordinate2D(latitude: userCoordinate.coordinate.latitude, longitude: userCoordinate.coordinate.longitude), radius: Double(InstagramClient.sharedInstance().searchRadius))
+        let circle = MKCircle(centerCoordinate: CLLocationCoordinate2D(latitude: userCoordinate.coordinate.latitude, longitude: userCoordinate.coordinate.longitude), radius: Double(searchRadiusSlider.value))
         self.mapView.addOverlay(circle)
         
         self.currentOverlay = circle
-
-        // Finally, delete all the points that are not within the overlay
-        deleteOutOfRangeMediaObjects(self.currentOverlay!)
         
         // Update our model
         InstagramClient.sharedInstance().userLatitude = userCoordinate.coordinate.latitude
@@ -184,6 +189,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             }
             
             self.configurePinView(pinView, media: annotation as! Media)
+            pinView?.setNeedsDisplay()
             
             return pinView
         }
@@ -222,16 +228,36 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
+    //MARK: - Actions
+    
+    @IBAction func sliderValueChanged(sender: UISlider) {
+        
+        let circle = MKCircle(centerCoordinate: CLLocationCoordinate2D(latitude: mapView.userLocation.location.coordinate.latitude ,longitude: mapView.userLocation.coordinate.longitude), radius: Double(sender.value))
+        self.mapView.addOverlay(circle)
+        self.mapView.removeOverlay(self.currentOverlay)
+            
+        self.currentOverlay = circle
+            
+        
+    
+    }
+    
+    @IBAction func sliderTouchUpInside(sender: UISlider) {
+        
+        InstagramClient.sharedInstance().searchRadius = Int(sender.value)
+        fetchRecentDataFromInstagram()
+        
+    }
+    
+
     
     //MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
             mapView.showsUserLocation = true
-            
         }
     }
-    
     
     //MARK: - NSFetchedResultControllerDelegate
     
@@ -265,7 +291,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     
     func fetchRecentDataFromInstagram() {
-
+        
+        // First delete all the media that are not within the overlay
+        deleteOutOfRangeMediaObjects(self.currentOverlay!)
+        
+        // Then get the new media
         InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
             
             if success {

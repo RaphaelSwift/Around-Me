@@ -75,6 +75,13 @@
                                     <outlet property="delegate" destination="5Cs-8w-mhx" id="UiW-IP-qoS"/>
                                 </connections>
                             </mapView>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2500" minValue="1000" maxValue="5000" translatesAutoresizingMaskIntoConstraints="NO" id="rqg-Cj-uwH">
+                                <rect key="frame" x="14" y="28" width="118" height="31"/>
+                                <connections>
+                                    <action selector="sliderTouchUpInside:" destination="5Cs-8w-mhx" eventType="touchUpInside" id="jCy-wb-FqW"/>
+                                    <action selector="sliderValueChanged:" destination="5Cs-8w-mhx" eventType="valueChanged" id="EN3-tk-Mgy"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -87,6 +94,7 @@
                     <tabBarItem key="tabBarItem" tag="-1" id="BJ4-MB-95S"/>
                     <connections>
                         <outlet property="mapView" destination="5aH-s7-xnq" id="X3Q-8W-bQ2"/>
+                        <outlet property="searchRadiusSlider" destination="rqg-Cj-uwH" id="ofn-4j-I5t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UsM-bW-aqQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

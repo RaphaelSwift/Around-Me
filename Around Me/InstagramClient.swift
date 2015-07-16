@@ -19,14 +19,20 @@ class InstagramClient: NSObject {
     var delegate:InstagramClientDelegate?
     
     // Set the region radius
-    let regionRadius: CLLocationDistance = 3000
+    var regionRadius: CLLocationDistance = 3000
     
     // Set the searchRadius
     var searchRadius: Int {
-        let radius = Int(regionRadius / 1.5)
-        return radius
+        
+        get {
+            let radius = Int(regionRadius / 1.5)
+            return radius
+        }
+        set {
+            regionRadius = Double(newValue) * 1.5
+        }
     }
-    
+
     var userLatitude: Double?
     var userLongitude: Double?
     
