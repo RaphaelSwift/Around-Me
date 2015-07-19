@@ -15,6 +15,19 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     let refreshControl = UIRefreshControl()
     
+    var refreshTimer = NSTimer()
+    
+    let refreshRate = 1.0
+    let maxMediaObjectsToDisplay = 20
+    
+    var showNetworkAlert = false {
+        didSet {
+            if oldValue == false && showNetworkAlert == true {
+                displayAlertController("The request timed out. Please check your internet connectivity", networkError: true)
+            }
+        }
+    }
+    
     // Create 3 empty arrays that will keep track of insertions, deletions, updates
     var insertedIndexPaths : [NSIndexPath]!
     var deletedIndexPaths : [NSIndexPath]!
@@ -40,9 +53,16 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.mediaCollectionView.alwaysBounceVertical = true
         
         // Implement a refresh when the user pull buttom on the collection view.
-        refreshControl.addTarget(self, action: "fetchRecentDataFromInstagram", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: "pauseTimerAndFetchRecentDataFromInstagram", forControlEvents: UIControlEvents.ValueChanged)
         self.mediaCollectionView.addSubview(refreshControl)
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        // Start the timer
+        self.startTimer()
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,6 +87,12 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        refreshTimer.invalidate()
+    }
+    
     
     // Convenience lazy context var, for easy access to the shared Managed Object Context
     lazy var sharedContext: NSManagedObjectContext = {
@@ -88,6 +114,13 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         }()
 
+    
+    //MARK: - Timer
+    
+    func startTimer() {
+        
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: true)
+    }
     
     //MARK: UICollectionViewDelegate, UICollectionViewDataSource
     
@@ -140,11 +173,18 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
                 }
             }
         }
-        
     }
     
     
     //MARK: UIRefreshControl
+    
+    func pauseTimerAndFetchRecentDataFromInstagram() {
+        
+        refreshTimer.invalidate()
+        fetchRecentDataFromInstagram()
+        startTimer()
+        
+    }
     
     func fetchRecentDataFromInstagram() {
         InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
@@ -152,16 +192,24 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.refreshControl.endRefreshing()
+                    if self.showNetworkAlert {
+                        self.showNetworkAlert = false }
                 }
             }
             
             if let error = error {
                 //handle error here
+                if error.code == -1001 {
+                    self.showNetworkAlert = true
+                }
+                
                 dispatch_async(dispatch_get_main_queue()) {
                     self.refreshControl.endRefreshing()
                 }
             }
         }
+        
+        self.deleteExceedingMediaObjects()
     }
     
     
@@ -245,6 +293,42 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
         
         return nil
+    }
+    
+    
+    // Check the number of media objects and delete the ones exceeding the maximum limit, deleting the oldest ones...
+    func deleteExceedingMediaObjects() {
+        
+        if let fetchedObjectsCount = fetchedResultController.fetchedObjects?.count {
+            let numberOfObjectsToDelete = fetchedObjectsCount - self.maxMediaObjectsToDisplay
+            
+            if numberOfObjectsToDelete > 0 {
+                
+                var fetchedObjectToDelete = fetchedResultController.fetchedObjects!
+                
+                for index in 1...numberOfObjectsToDelete {
+                    
+                    self.sharedContext.deleteObject(fetchedObjectToDelete.removeLast() as! Media)
+                    
+                }
+            }
+            //Save the context (ie. commit the changes)
+            CoreDataStackManager.sharedInstance().saveContext()
+            
+        }
+    }
+    
+    //MARK: UIAlertController
+    
+    func displayAlertController(errorMessage:String, networkError: Bool) {
+        
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+        
+        alert.addAction(action)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }

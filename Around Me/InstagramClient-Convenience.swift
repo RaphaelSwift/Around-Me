@@ -13,7 +13,7 @@ extension InstagramClient {
     
     func getMediaAtUserCoordinateFromInstagram(minTimeStamp: String?, completionHandler: (success: Bool, error: NSError?) -> Void) {
         
-        if let userLatitude = userLatitude, userLongitude = userLongitude {
+        if let userLatitude = dataSource?.userLocation(self)?.coordinate.latitude, userLongitude = dataSource?.userLocation(self)?.coordinate.longitude, searchRadius = dataSource?.searchRadius(self) {
         
             getMediaFromInstagramAtGivenLocation(distanceInMeters: searchRadius, latitude: userLatitude, longitude: userLongitude, minTimeStamp: minTimeStamp) { success, error in
             

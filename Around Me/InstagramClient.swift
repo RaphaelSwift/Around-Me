@@ -12,29 +12,34 @@ import MapKit
 @objc protocol InstagramClientDelegate {
     
     optional func didFinishAuthenticate()
+
+}
+
+protocol InstagramClientDataSource: class {
+    
+    func searchRadius(sender: InstagramClient) -> Int?
+    func userLocation(sender: InstagramClient) -> CLLocation?
 }
 
 class InstagramClient: NSObject {
     
     var delegate:InstagramClientDelegate?
+    weak var dataSource: InstagramClientDataSource?
     
     // Set the region radius
-    var regionRadius: CLLocationDistance = 3000
+    //var regionRadius: CLLocationDistance = 3000
     
-    // Set the searchRadius
-    var searchRadius: Int {
-        
-        get {
-            let radius = Int(regionRadius / 1.5)
-            return radius
-        }
-        set {
-            regionRadius = Double(newValue) * 1.5
-        }
-    }
-
-    var userLatitude: Double?
-    var userLongitude: Double?
+//    // Set the searchRadius
+//    var searchRadius: Int {
+//        
+//        get {
+//            let radius = Int(regionRadius / 1.5)
+//            return radius
+//        }
+//        set {
+//            regionRadius = Double(newValue) * 1.5
+//        }
+//    }
     
     
     // Shared Session
@@ -121,9 +126,7 @@ class InstagramClient: NSObject {
                         completionHandler(result: parsedData, error: nil)
                     }
                 }
-                
             }
-            
         }
         
         // Start the request
@@ -149,7 +152,6 @@ class InstagramClient: NSObject {
             } else {
                 completionHandler(imageData: data, error: nil)
             }
-            
         }
         
         task.resume()

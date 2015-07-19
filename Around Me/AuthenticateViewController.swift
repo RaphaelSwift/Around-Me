@@ -10,12 +10,27 @@ import UIKit
 
 class AuthenticateViewController: UIViewController, InstagramClientDelegate {
     
+    @IBOutlet var uiView: UIView!
+    @IBOutlet weak var signWithInstagramButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         InstagramClient.sharedInstance().delegate = self
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        
+        // Design the Sign In button & UIView background
+        
+        signWithInstagramButton.backgroundColor = UIColor(red:0/255, green:64/255, blue:128/255, alpha:1)
+        
+        signWithInstagramButton.layer.cornerRadius = 5
+
+        uiView.backgroundColor = UIColor(red:0/255, green:64/255, blue:128/255, alpha:0.3)
         
     }
     

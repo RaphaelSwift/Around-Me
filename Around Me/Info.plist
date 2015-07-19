@@ -48,6 +48,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To show you what&apos;s happening nearby</string>
+	<string>To show you the most recent Instagram media in your region. The application will not work correctly if location service is disabled.</string>
 </dict>
 </plist>
