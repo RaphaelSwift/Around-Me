@@ -82,7 +82,17 @@ extension InstagramClient {
 
 
 
-    func downloadAndStoreImages(media: Media, completionHandler: (image: UIImage?, error: NSError?) -> Void ){
+    func downloadAndStoreImages(media: Media, imageResolution: Media.Resolution, completionHandler: (image: UIImage?, error: NSError?) -> Void ){
+        
+        switch imageResolution {
+            
+        case .Thumbnail:
+            let imagePath = media.imagePathThumbnail
+        case .LowResolution:
+            let imagePath = media.imagePathLowRes
+        case .StandardResolution:
+            let imagePath = media.imagePathStandardRes            
+        }
     
             //TODO: Adapt it for standard and low resolution later ?
         let imagePath = media.imagePathThumbnail

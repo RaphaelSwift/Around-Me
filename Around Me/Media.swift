@@ -14,6 +14,13 @@ import CoreData
 
 class Media: NSManagedObject, MKAnnotation {
     
+    
+    enum Resolution {
+        case LowResolution
+        case StandardResolution
+        case Thumbnail
+    }
+    
     struct Keys {
         static let Longitude = "longitude"
         static let Latitude = "latitude"
@@ -25,6 +32,10 @@ class Media: NSManagedObject, MKAnnotation {
         static let Url = "url"
         static let CreatedTime = "created_time"
         static let Id = "id"
+        static let Caption = "caption"
+        static let Text = "text"
+        static let User = "user"
+        static let FullName = "full_name"
     }
     
     @NSManaged var createdTime: String
@@ -34,8 +45,8 @@ class Media: NSManagedObject, MKAnnotation {
     @NSManaged var imagePathLowRes: String
     @NSManaged var imagePathStandardRes: String
     @NSManaged var id: String
-    
-    
+    @NSManaged var captionText: String?
+    @NSManaged var fullName: String
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -67,6 +78,15 @@ class Media: NSManagedObject, MKAnnotation {
         
         // Retrieve the id
         id = dictionary[Media.Keys.Id] as! String
+        
+        // Retrieve the caption text
+        if let captionDictionary = dictionary[Media.Keys.Caption] as? [String:AnyObject] {
+            captionText = captionDictionary[Media.Keys.Text] as? String
+        }
+        
+        // Retrieve the name of the user
+        let userDictionary = dictionary[Media.Keys.User] as! [String:AnyObject]
+        fullName = userDictionary[Media.Keys.FullName] as! String
     
     }
     
@@ -98,4 +118,16 @@ class Media: NSManagedObject, MKAnnotation {
             InstagramClient.Caches.imageCache.storeImage(newValue, withIdentifier: imagePathThumbnail)
         }
     }
+    
+    var photoImageStandardResolution: UIImage? {
+        
+        get {
+            return InstagramClient.Caches.imageCache.imageWithIdentifier(imagePathStandardRes)
+        }
+        
+        set {
+            InstagramClient.Caches.imageCache.storeImage(newValue, withIdentifier: imagePathStandardRes)
+        }
+    }
+    
 }

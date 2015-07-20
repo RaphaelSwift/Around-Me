@@ -143,6 +143,64 @@
             </objects>
             <point key="canvasLocation" x="1089" y="215"/>
         </scene>
+        <!--Media Detail Pop Over View Controller-->
+        <scene sceneID="mNt-cE-oyL">
+            <objects>
+                <viewController storyboardIdentifier="MediaDetailPopOverViewController" id="dep-j8-eTd" customClass="MediaDetailPopOverViewController" customModule="Around_Me" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fmH-uj-Ceq"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wui-jO-Kfa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="baV-FB-alt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Caption Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="zfs-uo-zEv">
+                                <rect key="frame" x="16" y="0.0" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ElapsedTime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="qXK-hX-xAw">
+                                <rect key="frame" x="16" y="0.0" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vb2-dK-bmS">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="zfs-uo-zEv" secondAttribute="trailing" constant="16" id="8Kw-WF-j95"/>
+                            <constraint firstItem="vb2-dK-bmS" firstAttribute="leading" secondItem="baV-FB-alt" secondAttribute="leading" id="MG4-MJ-Bde"/>
+                            <constraint firstAttribute="trailing" secondItem="vb2-dK-bmS" secondAttribute="trailing" id="O3g-je-hBT"/>
+                            <constraint firstItem="qXK-hX-xAw" firstAttribute="leading" secondItem="baV-FB-alt" secondAttribute="leadingMargin" id="Q7b-9A-1e0"/>
+                            <constraint firstItem="Wui-jO-Kfa" firstAttribute="top" secondItem="vb2-dK-bmS" secondAttribute="bottom" id="Rc2-dz-Dtu"/>
+                            <constraint firstItem="qXK-hX-xAw" firstAttribute="top" secondItem="baV-FB-alt" secondAttribute="topMargin" id="SO3-s2-YMu"/>
+                            <constraint firstItem="qXK-hX-xAw" firstAttribute="trailing" secondItem="baV-FB-alt" secondAttribute="trailingMargin" id="UVm-XE-jsc"/>
+                            <constraint firstItem="vb2-dK-bmS" firstAttribute="top" secondItem="baV-FB-alt" secondAttribute="top" constant="20" id="YRn-YV-WPD"/>
+                            <constraint firstItem="zfs-uo-zEv" firstAttribute="top" secondItem="baV-FB-alt" secondAttribute="top" id="ayp-TM-sr4"/>
+                            <constraint firstItem="zfs-uo-zEv" firstAttribute="leading" secondItem="baV-FB-alt" secondAttribute="leading" constant="16" id="cOw-iZ-lTr"/>
+                            <constraint firstItem="fmH-uj-Ceq" firstAttribute="top" secondItem="qXK-hX-xAw" secondAttribute="bottom" id="kCa-5s-etK"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="kCa-5s-etK"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="elapsedTimeLabel" destination="qXK-hX-xAw" id="01A-H3-baw"/>
+                        <outlet property="mediaCaptionTextLabel" destination="zfs-uo-zEv" id="t7v-cG-zAh"/>
+                        <outlet property="mediaImageView" destination="vb2-dK-bmS" id="qff-t7-cnH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1SH-aE-vb6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1734" y="215"/>
+        </scene>
         <!--Media Collection View Controller-->
         <scene sceneID="AHO-BZ-3vg">
             <objects>

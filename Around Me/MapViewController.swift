@@ -10,14 +10,14 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UITabBarControllerDelegate, InstagramClientDataSource {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate, InstagramClientDataSource {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var refreshButton: UIButton!
     
     var locationManager = CLLocationManager()
     
-    let refreshRate = 1.0
+    let refreshRate = 15.0
     let maxMediaObjectsToDisplay = 50
     var refreshTimer = NSTimer()
     
@@ -211,6 +211,25 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return nil
     }
     
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+        //Present the image in a popover view controller
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("MediaDetailPopOverViewController") as! MediaDetailPopOverViewController
+        controller.modalPresentationStyle = UIModalPresentationStyle.Popover
+        controller.preferredContentSize = CGSizeMake(200, 200)
+        
+        let popOverController = controller.popoverPresentationController
+        popOverController?.delegate = self
+        popOverController?.sourceView = self.view
+        
+        // We want to position the popover on the pin that was selected
+        let point = mapView.convertCoordinate(view.annotation.coordinate, toPointToView: super.view)
+        popOverController?.sourceRect = CGRectMake(point.x, point.y, 0, 0)
+        
+        controller.mediaImage = view.image
+        controller.media = view.annotation as! Media
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         // Check if the annotation is the user annotation
@@ -253,7 +272,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         else {
             
             // Else, download it
-            InstagramClient.sharedInstance().downloadAndStoreImages(media) { image, error in
+            InstagramClient.sharedInstance().downloadAndStoreImages(media, imageResolution: Media.Resolution.Thumbnail) { image, error in
                 if let error = error {
                     //Handle error
                 }
@@ -263,7 +282,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                         pinView?.image = image
                         pinView?.frame.size.height = 40
                         pinView?.frame.size.width = 40
-                        
                     }
                 }
             }
@@ -273,6 +291,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         pinView?.frame.size.height = 40
         
     }
+    
+    //MARK: - UIAdaptivePresentationControllerDelegate
+    
+    // We need to implement this method, so that the popover presentation doesnt take full screen on Iphone
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
     
     //MARK: - Actions
     

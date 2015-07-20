@@ -160,7 +160,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         else {
             
             // Else, download it
-            InstagramClient.sharedInstance().downloadAndStoreImages(media) { image, error in
+            InstagramClient.sharedInstance().downloadAndStoreImages(media, imageResolution: Media.Resolution.Thumbnail) { image, error in
                 if let error = error {
                     //Handle error
                 }

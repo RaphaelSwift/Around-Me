@@ -24,6 +24,8 @@
 		F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */; };
 		F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */; };
 		F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */; };
+		F6F3CBB61B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */; };
+		F6F3CBB81B5D35BD00D2E32F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F3CBB71B5D35BD00D2E32F /* Time.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InstagramClient-Convenience.swift"; sourceTree = "<group>"; };
 		F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDetailPopOverViewController.swift; sourceTree = "<group>"; };
+		F6F3CBB71B5D35BD00D2E32F /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,9 +109,11 @@
 				F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */,
 				F6E497831B54F0270058EF44 /* MediaCollectionViewController.swift */,
 				F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */,
+				F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */,
 				F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */,
 				F6EA0B211B4D01CE00E4088E /* Images.xcassets */,
 				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
+				F6F3CBB71B5D35BD00D2E32F /* Time.swift */,
 				F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */,
 				F6EA0B181B4D01CE00E4088E /* Supporting Files */,
 				F6EA0B3C1B4D444D00E4088E /* Instagram */,
@@ -255,6 +261,7 @@
 			files = (
 				F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */,
 				F6EA0B1D1B4D01CE00E4088E /* AuthenticateViewController.swift in Sources */,
+				F6F3CBB61B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift in Sources */,
 				F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */,
 				F6E497861B54FD370058EF44 /* MediaCollectionViewCell.swift in Sources */,
 				F6EA0B3E1B4D5DC500E4088E /* InstagramClient-Constants.swift in Sources */,
@@ -264,6 +271,7 @@
 				F6E77C601B515DC4004AA142 /* Model.xcdatamodeld in Sources */,
 				F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */,
 				F6E77C591B4FE19D004AA142 /* LastKnownMapRegion.swift in Sources */,
+				F6F3CBB81B5D35BD00D2E32F /* Time.swift in Sources */,
 				F6E77C5B1B515724004AA142 /* Media.swift in Sources */,
 				F6EA0B3B1B4D443300E4088E /* InstagramClient.swift in Sources */,
 			);
