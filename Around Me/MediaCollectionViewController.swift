@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MediaCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
+class MediaCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     
@@ -17,9 +17,11 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     var refreshTimer = NSTimer()
     
-    let refreshRate = 1.0
+    let refreshRate = 15.0
     let maxMediaObjectsToDisplay = 20
     
+    
+    // If multiple requests get timed out, we want to show the alert only once
     var showNetworkAlert = false {
         didSet {
             if oldValue == false && showNetworkAlert == true {
@@ -119,7 +121,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func startTimer() {
         
-        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: true)
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: false)
     }
     
     //MARK: UICollectionViewDelegate, UICollectionViewDataSource
@@ -143,14 +145,44 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         configureCell(cell, media: media)
         
         return cell
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        let media = fetchedResultController.objectAtIndexPath(indexPath) as! Media
+        
+        //Present the image in a popover view controller
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("MediaDetailPopOverViewController") as! MediaDetailPopOverViewController
+        controller.modalPresentationStyle = UIModalPresentationStyle.Popover
+        controller.preferredContentSize = CGSizeMake(200, 200)
+        
+        let popOverController = controller.popoverPresentationController
+        popOverController?.delegate = self
+        popOverController?.sourceView = self.view
+        
+        // Get the center position of the selected cell
+        let attributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)
+        let cellPoint = attributes?.center
+        
+        // We want to position the popover on the cell that was selected
+        popOverController?.sourceRect = CGRectMake(CGFloat(cellPoint!.x), CGFloat(cellPoint!.y), 0, 0)
+        
+        if let photo = media.photoImage {
+            controller.mediaImage = photo
+        } else {
+            controller.mediaImage = UIImage(named: "Placeholder")
+        }
+
+        controller.media = media
+        self.presentViewController(controller, animated: true, completion: nil)
         
     }
     
     func configureCell(mediaImageCell: MediaCollectionViewCell, media: Media) {
         
         mediaImageCell.imageView.image = UIImage(named: "Placeholder")
-        mediaImageCell.timeStampLabel.text = media.createdTime
-        mediaImageCell.locationLabel.text =  "\(media.latitude) \(media.longitude)"
         
         // If the image has already been downloaded, display it
         if let photo = media.photoImage {
@@ -191,6 +223,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
             
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.startTimer()
                     self.refreshControl.endRefreshing()
                     if self.showNetworkAlert {
                         self.showNetworkAlert = false }
@@ -276,6 +309,13 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
             
         }
         
+    }
+    
+    //MARK: - UIAdaptivePresentationControllerDelegate
+    
+    // We need to implement this method, so that the popover presentation doesnt take full screen on Iphone
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
     }
 
 

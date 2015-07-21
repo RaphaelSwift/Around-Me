@@ -233,37 +233,17 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dfS-bb-CdV">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BOF-Lh-9TZ">
-                                                    <rect key="frame" x="8" y="121" width="134" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TimeStamp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6go-6T-Sky">
-                                                    <rect key="frame" x="8" y="8" width="134" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="BOF-Lh-9TZ" firstAttribute="bottom" secondItem="AMv-4B-c1O" secondAttribute="bottomMargin" id="1bi-yG-V0v"/>
-                                            <constraint firstItem="BOF-Lh-9TZ" firstAttribute="trailing" secondItem="AMv-4B-c1O" secondAttribute="trailingMargin" id="83h-xO-Uzl"/>
                                             <constraint firstAttribute="bottom" secondItem="dfS-bb-CdV" secondAttribute="bottom" id="Bfb-nf-ohZ"/>
-                                            <constraint firstItem="6go-6T-Sky" firstAttribute="trailing" secondItem="AMv-4B-c1O" secondAttribute="trailingMargin" id="Cki-KJ-NJY"/>
-                                            <constraint firstItem="6go-6T-Sky" firstAttribute="leading" secondItem="AMv-4B-c1O" secondAttribute="leadingMargin" id="FVp-PF-z81"/>
                                             <constraint firstItem="dfS-bb-CdV" firstAttribute="top" secondItem="AMv-4B-c1O" secondAttribute="top" id="Muh-V1-DN9"/>
-                                            <constraint firstItem="BOF-Lh-9TZ" firstAttribute="leading" secondItem="AMv-4B-c1O" secondAttribute="leadingMargin" id="RJJ-8G-tUj"/>
                                             <constraint firstItem="dfS-bb-CdV" firstAttribute="leading" secondItem="AMv-4B-c1O" secondAttribute="leading" id="bN7-LY-M3Z"/>
-                                            <constraint firstItem="6go-6T-Sky" firstAttribute="top" secondItem="AMv-4B-c1O" secondAttribute="topMargin" id="dZk-2S-i4N"/>
                                             <constraint firstAttribute="trailing" secondItem="dfS-bb-CdV" secondAttribute="trailing" id="mdh-t3-LaD"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="dfS-bb-CdV" id="Dpk-MV-nEU"/>
-                                            <outlet property="locationLabel" destination="BOF-Lh-9TZ" id="czK-aA-19k"/>
-                                            <outlet property="timeStampLabel" destination="6go-6T-Sky" id="3dU-Fs-4Dd"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
