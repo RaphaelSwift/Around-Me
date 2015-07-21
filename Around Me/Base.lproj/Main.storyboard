@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -37,24 +38,84 @@
                                     <action selector="authenticate" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Rlq-tp-gps"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Rmt-6H-FCs">
+                                <rect key="frame" x="290" y="255" width="20" height="20"/>
+                                <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not open Instagram authentication page, please check your internet connectivity and try again..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1d-Q8-Rq7">
+                                <rect key="frame" x="111" y="324" width="379" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="i2i-uw-ibZ"/>
+                                    <constraint firstAttribute="width" constant="379" id="r5K-98-qMG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L43-Z9-QBg">
+                                <rect key="frame" x="16" y="20" width="54" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelTouchUpInside" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tmV-BF-SYQ"/>
+                                </connections>
+                            </button>
+                            <webView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OTZ-6i-x6a">
+                                <rect key="frame" x="0.0" y="61" width="600" height="539"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="238" id="Nhm-ef-dTB"/>
+                                    <constraint firstAttribute="width" secondItem="OTZ-6i-x6a" secondAttribute="height" multiplier="293:238" id="ewb-Ve-Qq5"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Nhm-ef-dTB"/>
+                                        <exclude reference="ewb-Ve-Qq5"/>
+                                    </mask>
+                                </variation>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="fez-wI-pYM" secondAttribute="centerX" id="2nh-UE-nzI"/>
+                            <constraint firstItem="OTZ-6i-x6a" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="6tB-eK-Wgm"/>
+                            <constraint firstItem="V1d-Q8-Rq7" firstAttribute="top" secondItem="fez-wI-pYM" secondAttribute="bottom" constant="8" id="Imz-sN-b5O"/>
+                            <constraint firstItem="L43-Z9-QBg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="NgP-Ik-AXc"/>
+                            <constraint firstAttribute="centerX" secondItem="V1d-Q8-Rq7" secondAttribute="centerX" id="XuK-83-iMA"/>
                             <constraint firstAttribute="centerX" secondItem="2FZ-3g-8Rp" secondAttribute="centerX" id="aU7-09-TEW"/>
+                            <constraint firstItem="L43-Z9-QBg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="ehy-kQ-I1W"/>
+                            <constraint firstItem="OTZ-6i-x6a" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="61" id="f02-g0-DRk"/>
+                            <constraint firstItem="OTZ-6i-x6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="hbX-l7-nhY"/>
+                            <constraint firstAttribute="centerX" secondItem="OTZ-6i-x6a" secondAttribute="centerX" constant="-0.5" id="hrm-j7-kCq"/>
                             <constraint firstItem="fez-wI-pYM" firstAttribute="top" secondItem="2FZ-3g-8Rp" secondAttribute="bottom" constant="80" id="iXN-d1-yRQ"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="OTZ-6i-x6a" secondAttribute="bottom" id="kyt-ne-xGX"/>
                             <constraint firstAttribute="centerY" secondItem="fez-wI-pYM" secondAttribute="centerY" id="o7H-CU-ydX"/>
+                            <constraint firstAttribute="trailing" secondItem="OTZ-6i-x6a" secondAttribute="trailing" id="qS0-Im-lxb"/>
+                            <constraint firstAttribute="centerX" secondItem="Rmt-6H-FCs" secondAttribute="centerX" id="zY2-Sy-9f0"/>
+                            <constraint firstItem="fez-wI-pYM" firstAttribute="top" secondItem="Rmt-6H-FCs" secondAttribute="bottom" constant="8" id="zrB-xH-IXu"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6tB-eK-Wgm"/>
+                                <exclude reference="hrm-j7-kCq"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="dQ8-dT-wmX"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Rmt-6H-FCs" id="bOG-0m-TWN"/>
+                        <outlet property="authenticateWebView" destination="OTZ-6i-x6a" id="mHF-t8-ddQ"/>
+                        <outlet property="cancelButton" destination="L43-Z9-QBg" id="U5v-2u-C8Y"/>
+                        <outlet property="connectionLabel" destination="V1d-Q8-Rq7" id="L4e-a7-mBk"/>
                         <outlet property="signWithInstagramButton" destination="fez-wI-pYM" id="z51-HZ-eAP"/>
                         <outlet property="uiView" destination="kh9-bI-dsS" id="ZAF-g0-XHT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-271" y="488"/>
+            <point key="canvasLocation" x="-248" y="362"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="7Kf-ZR-7pp">

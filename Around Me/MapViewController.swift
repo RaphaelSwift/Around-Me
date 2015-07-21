@@ -213,10 +213,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         popOverController?.delegate = self
         popOverController?.sourceView = self.view
         
-        // We want to position the popover on the pin that was selected
+        // Position the popover on the pin that was selected
         let point = mapView.convertCoordinate(view.annotation.coordinate, toPointToView: super.view)
         popOverController?.sourceRect = CGRectMake(point.x, point.y, 0, 0)
         
+        // Pass the data and present the popover controller
         controller.mediaImage = view.image
         controller.media = view.annotation as! Media
         self.presentViewController(controller, animated: true, completion: nil)
@@ -390,10 +391,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 
                 self.refreshControl.endRefreshing()
                 
-                if success {
-                    
-                }
-                
                 if let error = error {
                     
                     //Check for an internet connectivity error
@@ -464,7 +461,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         //Save the context (ie. commit the changes)
         CoreDataStackManager.sharedInstance().saveContext()
-        
     }
     
     //MARK: UIAlertController

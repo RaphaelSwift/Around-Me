@@ -215,10 +215,6 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
                 self.refreshControl.endRefreshing()
             }
             
-            if success {
-                
-            }
-            
             if let error = error {
                 //handle error here
                 if error.code == -1001 {
