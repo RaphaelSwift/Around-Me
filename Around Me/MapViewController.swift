@@ -16,8 +16,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     @IBOutlet weak var refreshButton: UIButton!
     
     var locationManager = CLLocationManager()
+    let refreshControl = UIRefreshControl()
     
-    let refreshRate = 15.0
+    let refreshRate = 10.0
     let maxMediaObjectsToDisplay = 50
     var refreshTimer = NSTimer()
     
@@ -31,14 +32,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     // Create an instance of our LastKnownMapRegion class
     let lastKnownMapRegion = LastKnownMapRegion()
-    
-    var showNetworkAlert = false {
-        didSet {
-            if oldValue == false && showNetworkAlert == true {
-                //displayAlertController("The request timed out. Please check your internet connectivity", networkError: true)
-            }
-        }
-    }
     
     // Convenience lazy context var, for easy access to the shared Managed Object Context
     lazy var sharedContext: NSManagedObjectContext = {
@@ -84,6 +77,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.viewDidAppear(true)
         
         checkLocationUserStatus()
+        
+        startTimer()
         
     }
     
@@ -153,8 +148,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
-        self.refreshTimer.invalidate()
-        
         if !self.tabBarController!.tabBar.userInteractionEnabled {
             self.tabBarController?.tabBar.userInteractionEnabled = true
         }
@@ -191,8 +184,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         // Then retrieve new media, that were posted after our latest media item. If minTimeStamp is nil, it ll covers the last 5 days.
        self.fetchRecentDataFromInstagram()
-        
-        self.startTimer()
         
     }
     
@@ -316,8 +307,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     @IBAction func sliderTouchUpInside(sender: UISlider) {
         
-        refreshTimer.invalidate()
-        
         //1. Delete all the media that are not within the overlay
         if let currentOverlay = self.currentOverlay {
             deleteOutOfRangeMediaObjects(self.currentOverlay!)
@@ -329,17 +318,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //3. Save the prefered search radius
         userDefault.setFloat(sender.value, forKey: searchRadiusKey)
         
-        startTimer()
-        
     }
     
     @IBAction func refreshTouchUpInside(sender: AnyObject) {
         
-        refreshTimer.invalidate()
-        
         fetchRecentDataFromInstagram()
-        
-        startTimer()
     }
     
 
@@ -399,25 +382,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func fetchRecentDataFromInstagram() {
         
-
-        // Then get the new media
-        InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
-            if success {
-                if self.showNetworkAlert {
-                    self.showNetworkAlert = false }
-            }
+        if self.refreshControl.refreshing == false {
+            self.refreshControl.beginRefreshing()
             
-            if let error = error {
+            // Then get the new media
+            InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
                 
-                //Check for an internet connectivity error
-                if error.code == -1001 {
-                    self.showNetworkAlert = true
+                self.refreshControl.endRefreshing()
+                
+                if success {
+                    
+                }
+                
+                if let error = error {
+                    
+                    //Check for an internet connectivity error
+                    if error.code == -1001 {
+                        self.displayAlertController("Error", errorMessage: "The request timed out. Please check your internet connectivity", networkError: true)
+                    }
                 }
             }
+        self.deleteExceedingMediaObjects() //TODO: FIX BUG
         }
-        
-    self.deleteExceedingMediaObjects() //TODO: FIX BUG
-        
     }
     
     // This method retrieve the created time of the latest media

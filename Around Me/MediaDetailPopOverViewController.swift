@@ -55,7 +55,7 @@ class MediaDetailPopOverViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        UIView.animateWithDuration(1.0, delay: 1.5, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {self.elapsedTimeLabel.alpha = 0.0}) { animationEnded in
+        UIView.animateWithDuration(1.0, delay: 1.0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {self.elapsedTimeLabel.alpha = 0.0}) { animationEnded in
             
             if animationEnded {
                 self.mediaCaptionTextLabel.alpha = 1

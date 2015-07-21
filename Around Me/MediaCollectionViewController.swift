@@ -17,18 +17,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     var refreshTimer = NSTimer()
     
-    let refreshRate = 15.0
+    let refreshRate = 10.0
     let maxMediaObjectsToDisplay = 20
-    
-    
-    // If multiple requests get timed out, we want to show the alert only once
-    var showNetworkAlert = false {
-        didSet {
-            if oldValue == false && showNetworkAlert == true {
-                displayAlertController("The request timed out. Please check your internet connectivity", networkError: true)
-            }
-        }
-    }
     
     // Create 3 empty arrays that will keep track of insertions, deletions, updates
     var insertedIndexPaths : [NSIndexPath]!
@@ -55,7 +45,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.mediaCollectionView.alwaysBounceVertical = true
         
         // Implement a refresh when the user pull buttom on the collection view.
-        refreshControl.addTarget(self, action: "pauseTimerAndFetchRecentDataFromInstagram", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: "fetchRecentDataFromInstagram", forControlEvents: UIControlEvents.ValueChanged)
         self.mediaCollectionView.addSubview(refreshControl)
         
     }
@@ -120,8 +110,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     //MARK: - Timer
     
     func startTimer() {
-        
-        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagram", userInfo: nil, repeats: false)
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagramTriggeredByTimer", userInfo: nil, repeats: true)
     }
     
     //MARK: UICollectionViewDelegate, UICollectionViewDataSource
@@ -209,39 +198,34 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     
     //MARK: UIRefreshControl
-    
-    func pauseTimerAndFetchRecentDataFromInstagram() {
+
+    func fetchRecentDataFromInstagramTriggeredByTimer() {
         
-        refreshTimer.invalidate()
-        fetchRecentDataFromInstagram()
-        startTimer()
-        
+        // Check if a refresh is already in progress and if not fetch new media data
+        if !refreshControl.refreshing {
+            self.refreshControl.beginRefreshing()
+            fetchRecentDataFromInstagram()
+        }
     }
     
     func fetchRecentDataFromInstagram() {
         InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
             
+            dispatch_async(dispatch_get_main_queue()) {
+                self.refreshControl.endRefreshing()
+            }
+            
             if success {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.startTimer()
-                    self.refreshControl.endRefreshing()
-                    if self.showNetworkAlert {
-                        self.showNetworkAlert = false }
-                }
+                
             }
             
             if let error = error {
                 //handle error here
                 if error.code == -1001 {
-                    self.showNetworkAlert = true
-                }
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.refreshControl.endRefreshing()
+                    self.displayAlertController("The request timed out. Please check your internet connectivity", networkError: true)
                 }
             }
         }
-        
         self.deleteExceedingMediaObjects()
     }
     
