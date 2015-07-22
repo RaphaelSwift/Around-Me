@@ -23,6 +23,7 @@
 		F6EA0B3E1B4D5DC500E4088E /* InstagramClient-Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */; };
 		F6EA0B701B4E5E4D00E4088E /* InstagramClient-Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */; };
 		F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */; };
+		F6EBE7341B5FF02E00D26396 /* MediaDetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EBE7331B5FF02E00D26396 /* MediaDetailWebViewController.swift */; };
 		F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */; };
 		F6F3CBB61B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */; };
 		F6F3CBB81B5D35BD00D2E32F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F3CBB71B5D35BD00D2E32F /* Time.swift */; };
@@ -59,6 +60,7 @@
 		F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InstagramClient-Constants.swift"; sourceTree = "<group>"; };
 		F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InstagramClient-Convenience.swift"; sourceTree = "<group>"; };
 		F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F6EBE7331B5FF02E00D26396 /* MediaDetailWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDetailWebViewController.swift; sourceTree = "<group>"; };
 		F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDetailPopOverViewController.swift; sourceTree = "<group>"; };
 		F6F3CBB71B5D35BD00D2E32F /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */,
 				F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */,
 				F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */,
+				F6EBE7331B5FF02E00D26396 /* MediaDetailWebViewController.swift */,
 				F6EA0B211B4D01CE00E4088E /* Images.xcassets */,
 				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
 				F6F3CBB71B5D35BD00D2E32F /* Time.swift */,
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6ECA7AF1B53B5CC00663B33 /* ImageCache.swift in Sources */,
+				F6EBE7341B5FF02E00D26396 /* MediaDetailWebViewController.swift in Sources */,
 				F6EA0B1D1B4D01CE00E4088E /* AuthenticateViewController.swift in Sources */,
 				F6F3CBB61B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift in Sources */,
 				F6EA0BAA1B4EB7ED00E4088E /* MapViewController.swift in Sources */,

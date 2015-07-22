@@ -41,9 +41,9 @@ class Media: NSManagedObject, MKAnnotation {
     @NSManaged var createdTime: String
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
-    @NSManaged var imagePathThumbnail: String
-    @NSManaged var imagePathLowRes: String
-    @NSManaged var imagePathStandardRes: String
+    @NSManaged var imagePathThumbnail: String?
+    @NSManaged var imagePathLowRes: String?
+    @NSManaged var imagePathStandardRes: String?
     @NSManaged var id: String
     @NSManaged var captionText: String?
     @NSManaged var fullName: String
@@ -69,9 +69,9 @@ class Media: NSManagedObject, MKAnnotation {
         
         // Retrieve the image paths
         let imagesDictionary = dictionary[Media.Keys.Images] as! [String: AnyObject]
-        imagePathLowRes = imagesDictionary[Media.Keys.LowResolution]![Media.Keys.Url]! as! String
-        imagePathStandardRes = imagesDictionary[Media.Keys.StandardResolution]![Media.Keys.Url] as! String
-        imagePathThumbnail = imagesDictionary[Media.Keys.LowResolution]![Media.Keys.Url] as! String
+        imagePathLowRes = imagesDictionary[Media.Keys.LowResolution]![Media.Keys.Url]! as? String
+        imagePathStandardRes = imagesDictionary[Media.Keys.StandardResolution]![Media.Keys.Url] as? String
+        imagePathThumbnail = imagesDictionary[Media.Keys.LowResolution]![Media.Keys.Url] as? String
         
         // Retrieve the created time
         createdTime = dictionary[Media.Keys.CreatedTime] as! String
@@ -102,9 +102,9 @@ class Media: NSManagedObject, MKAnnotation {
     override func didSave() {
         
         if self.deleted {
-            InstagramClient.Caches.imageCache.deleteImage(imagePathThumbnail)
-            InstagramClient.Caches.imageCache.deleteImage(imagePathLowRes)
-            InstagramClient.Caches.imageCache.deleteImage(imagePathStandardRes)
+            InstagramClient.Caches.imageCache.deleteImage(imagePathThumbnail!)
+            InstagramClient.Caches.imageCache.deleteImage(imagePathLowRes!)
+            InstagramClient.Caches.imageCache.deleteImage(imagePathStandardRes!)
         }
     }
     
@@ -115,7 +115,9 @@ class Media: NSManagedObject, MKAnnotation {
         }
         
         set {
-            InstagramClient.Caches.imageCache.storeImage(newValue, withIdentifier: imagePathThumbnail)
+            if let imagePathThumbnail = imagePathThumbnail {
+                InstagramClient.Caches.imageCache.storeImage(newValue, withIdentifier: imagePathThumbnail)
+            }
         }
     }
     
@@ -126,7 +128,9 @@ class Media: NSManagedObject, MKAnnotation {
         }
         
         set {
+            if let imagePathStandardRes = imagePathStandardRes {
             InstagramClient.Caches.imageCache.storeImage(newValue, withIdentifier: imagePathStandardRes)
+            }
         }
     }
     

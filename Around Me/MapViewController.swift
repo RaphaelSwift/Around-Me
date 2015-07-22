@@ -22,6 +22,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let maxMediaObjectsToDisplay = 50
     var refreshTimer = NSTimer()
     
+    
+    var tapGestureRecognizer: UIGestureRecognizer? = nil
+    
     @IBOutlet weak var searchRadiusSlider: UISlider!
     
     let userDefault = NSUserDefaults()
@@ -43,6 +46,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "displayDetails:")
+        
+        
+        // Initial settings
         self.tabBarController?.tabBar.userInteractionEnabled = false
         refreshButton.enabled = false
         searchRadiusSlider.enabled = false
@@ -208,6 +215,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let controller = storyboard?.instantiateViewControllerWithIdentifier("MediaDetailPopOverViewController") as! MediaDetailPopOverViewController
         controller.modalPresentationStyle = UIModalPresentationStyle.Popover
         controller.preferredContentSize = CGSizeMake(200, 200)
+        controller.view.addGestureRecognizer(tapGestureRecognizer!)
+
         
         let popOverController = controller.popoverPresentationController
         popOverController?.delegate = self
@@ -386,6 +395,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if self.refreshControl.refreshing == false {
             self.refreshControl.beginRefreshing()
             
+            self.deleteExceedingMediaObjects()
+            
             // Then get the new media
             InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
                 
@@ -399,7 +410,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     }
                 }
             }
-        self.deleteExceedingMediaObjects() //TODO: FIX BUG
         }
     }
     
@@ -475,6 +485,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func displayDetails(recognizer: UITapGestureRecognizer) {
+        
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("MediaDetailWebViewController") as! MediaDetailWebViewController
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        presentViewController(controller, animated: true, completion: nil)
+        
 
+    }
     
 }

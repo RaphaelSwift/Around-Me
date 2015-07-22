@@ -260,7 +260,52 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1SH-aE-vb6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1734" y="215"/>
+            <point key="canvasLocation" x="1736" y="479"/>
+        </scene>
+        <!--Media Detail Web View Controller-->
+        <scene sceneID="diq-6G-SF8">
+            <objects>
+                <viewController storyboardIdentifier="MediaDetailWebViewController" id="hxp-tY-mzi" customClass="MediaDetailWebViewController" customModule="Around_Me" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KGC-AP-sgL"/>
+                        <viewControllerLayoutGuide type="bottom" id="CrE-r3-aRa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zbw-7e-HHz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfN-9m-Zoy">
+                                <rect key="frame" x="16" y="20" width="39" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backTouchUpInside:" destination="hxp-tY-mzi" eventType="touchUpInside" id="Y3d-gg-0rY"/>
+                                </connections>
+                            </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z2h-mB-P6C">
+                                <rect key="frame" x="0.0" y="61" width="600" height="539"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gfN-9m-Zoy" firstAttribute="top" secondItem="KGC-AP-sgL" secondAttribute="bottom" id="38k-k0-AWv"/>
+                            <constraint firstAttribute="trailing" secondItem="Z2h-mB-P6C" secondAttribute="trailing" id="4Aq-cG-IjH"/>
+                            <constraint firstItem="Z2h-mB-P6C" firstAttribute="top" secondItem="gfN-9m-Zoy" secondAttribute="bottom" constant="8" id="E2g-5E-MXX"/>
+                            <constraint firstItem="CrE-r3-aRa" firstAttribute="top" secondItem="Z2h-mB-P6C" secondAttribute="bottom" id="FfG-m0-wh8"/>
+                            <constraint firstItem="Z2h-mB-P6C" firstAttribute="leading" secondItem="zbw-7e-HHz" secondAttribute="leading" id="ZJo-Ru-w1R"/>
+                            <constraint firstItem="gfN-9m-Zoy" firstAttribute="leading" secondItem="zbw-7e-HHz" secondAttribute="leadingMargin" id="vJs-3L-rSQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Z2h-mB-P6C" id="IVv-5S-Yhg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l6s-AG-lFd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2398" y="479"/>
         </scene>
         <!--Media Collection View Controller-->
         <scene sceneID="AHO-BZ-3vg">
@@ -275,7 +320,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1uI-ny-E53">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PIu-Wq-ahO">
                                     <size key="itemSize" width="150" height="150"/>
@@ -318,7 +363,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="1uI-ny-E53" secondAttribute="trailing" id="2Zh-7v-uCv"/>
                             <constraint firstItem="1uI-ny-E53" firstAttribute="top" secondItem="9mN-1r-lYH" secondAttribute="top" constant="20" id="AYI-qa-YdJ"/>
-                            <constraint firstAttribute="bottom" secondItem="1uI-ny-E53" secondAttribute="bottom" id="csa-wK-E6A"/>
+                            <constraint firstAttribute="bottom" secondItem="1uI-ny-E53" secondAttribute="bottom" constant="49" id="csa-wK-E6A"/>
                             <constraint firstItem="1uI-ny-E53" firstAttribute="leading" secondItem="9mN-1r-lYH" secondAttribute="leading" id="wK0-RC-46u"/>
                         </constraints>
                     </view>

@@ -57,22 +57,39 @@ class Time {
             
             var postedTimeAgo: String?
             
-            if day > 0 {
-                postedTimeAgo = "\(day) days ago"
-            }
-            
-            if hour > 0 {
-                postedTimeAgo = "\(hour) hours ago"
+            if second > 0 {
+                if second == 1 {
+                    postedTimeAgo = "\(second) second ago"
+                } else {
+                    postedTimeAgo = "\(second) seconds ago"
+                }
             }
             
             if minute > 0 {
-                postedTimeAgo = "\(minute) minutes ago"
+                if minute == 1 {
+                    postedTimeAgo = "\(minute) minute ago"
+                } else {
+                    postedTimeAgo = "\(minute) minutes ago"
+                }
             }
             
-            if second > 0 {
-                postedTimeAgo = "\(second) seconds ago"
+            if hour > 0 {
+                if hour == 1 {
+                    postedTimeAgo = "\(hour) hour ago"
+                } else {
+                    postedTimeAgo = "\(hour) hours ago"
+                }
             }
             
+            if day > 0 {
+                if day == 1 {
+                    postedTimeAgo = "\(day) day ago"
+                }
+                else {
+                    postedTimeAgo = "\(day) days ago"
+                }
+            }
+
             return postedTimeAgo!
         }
         return nil

@@ -18,7 +18,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     var refreshTimer = NSTimer()
     
     let refreshRate = 10.0
-    let maxMediaObjectsToDisplay = 20
+    let maxMediaObjectsToDisplay = 50
     
     // Create 3 empty arrays that will keep track of insertions, deletions, updates
     var insertedIndexPaths : [NSIndexPath]!
@@ -209,6 +209,9 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func fetchRecentDataFromInstagram() {
+        
+        self.deleteExceedingMediaObjects()
+        
         InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
             
             dispatch_async(dispatch_get_main_queue()) {
@@ -222,9 +225,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
                 }
             }
         }
-        self.deleteExceedingMediaObjects()
     }
-    
     
     //MARK: - Add NSFetchedResultsControllerDelegate methods
     

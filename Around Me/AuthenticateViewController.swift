@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthenticateViewController: UIViewController, UIWebViewDelegate, AppDelegateDelegate, InstagramClientDelegate {
+class AuthenticateViewController: UIViewController, UIWebViewDelegate, InstagramClientDelegate {
     
     @IBOutlet var uiView: UIView!
     @IBOutlet weak var signWithInstagramButton: UIButton!
@@ -27,8 +27,7 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, AppDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let appDelegate = AppDelegate()
-        appDelegate.delegate = self
+        InstagramClient.sharedInstance().delegate = self
         
         connectionLabel.text = "Could not open Instagram authentication page, please check your internet connectivity and try again..."
         connectionLabel.textColor = UIColor.whiteColor()
@@ -55,7 +54,7 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, AppDelega
         super.viewDidAppear(true)
         
         // Checks if an access token already exists. If it does, performs segue.
-        if InstagramClient.sharedInstance().restoreAccessToken() {
+        if InstagramClient.sharedInstance().tokenValue != nil {
             
             let myController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
             self.presentViewController(myController, animated: true, completion: nil)
@@ -89,11 +88,6 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, AppDelega
         
         let myController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
         self.presentViewController(myController, animated: true, completion: nil)
-    }
-    
-    // MARK: - AppDelegateDelegate
-    func didAuthenticate(token: String?) {
-        InstagramClient.sharedInstance().
     }
     
     //MARK: - UIWebViewDelegate

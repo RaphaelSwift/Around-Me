@@ -34,22 +34,14 @@ class InstagramClient: NSObject {
         super.init()
     }
     
-    // Each time the token value is set, we store it in the Document directory, using NSKeyedArchiver
     var tokenValue: String? {
-        didSet {
-            
-            if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-                self.saveAccessToken(tokenValue!)
-            }
+        get {
+            return restoreAccessToken()
         }
-    }
-    
-    // We use a property observer to check when we have recieved the returned token from Instagram.
-    var authenticated : Bool? {
-        didSet {
-            if authenticated == true {
-                delegate?.didFinishAuthenticate!()
-            }
+        
+        set {
+            saveAccessToken(newValue!)
+            self.delegate?.didFinishAuthenticate!()
         }
     }
     
@@ -163,15 +155,14 @@ class InstagramClient: NSObject {
     }
     
     //Return true if an access token exists at this path
-    func restoreAccessToken() -> Bool {
+    func restoreAccessToken() -> String? {
         
         if let accessToken = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? String {
-            self.tokenValue = accessToken
             
-            return true
+            return accessToken
         }
     
-    return false
+    return nil
     }
     
     //MARK: - Shared Cache

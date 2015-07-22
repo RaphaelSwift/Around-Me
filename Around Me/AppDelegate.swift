@@ -8,19 +8,11 @@
 
 import UIKit
 
-
-@objc protocol AppDelegateDelegate {
-    
-    optional func didAuthenticate(token: String?)
-
-}
-
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var delegate:AppDelegateDelegate?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -31,12 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         
         // We extract the code value recieved from Instagram and pass it to our model
-        let tokenString = self.extractCode("\(url)")
-        
-        InstagramClient.sharedInstance().tokenValue = tokenString
-        InstagramClient.sharedInstance().authenticated = true
-        
-        delegate?.didAuthenticate!(tokenString)
+        let tokenString = self.extractTokenCode("\(url)")
+        if let tokenString = tokenString {
+            InstagramClient.sharedInstance().tokenValue = tokenString
+        }
         
         return true
     }
@@ -68,12 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     // Given a url string, extract the recieved code
-    func extractCode (url: String) -> String? {
+    func extractTokenCode (url: String) -> String? {
         
-        let characterToFind: Character = "="
+        let accessTokenKey = "access_token="
         
-        if let characterToFindIndex = find(url, characterToFind) {
-            let code = url.substringFromIndex(characterToFindIndex.successor())
+        if let range = url.rangeOfString(accessTokenKey) {
+            let index = range.endIndex
+            let code = url.substringFromIndex(index)
             
             return code
         }

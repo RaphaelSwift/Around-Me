@@ -94,23 +94,23 @@ extension InstagramClient {
             let imagePath = media.imagePathStandardRes            
         }
     
-            //TODO: Adapt it for standard and low resolution later ?
-        let imagePath = media.imagePathThumbnail
+        if let imagePath = media.imagePathThumbnail {
     
-        taskForImage(imagePath) { data, error in
-            if let error = error {
-                //Handle error here
-                completionHandler(image: nil, error: error)
+            taskForImage(imagePath) { data, error in
+                if let error = error {
+                    //Handle error here
+                    completionHandler(image: nil, error: error)
+                }
+            
+                if let data = data {
+                    let photoImage = UIImage(data: data)
+                    
+                    //Cache the image
+                    media.photoImage = photoImage
+                    
+                    completionHandler(image: photoImage, error: nil)
+                }
             }
-        
-            if let data = data {
-                let photoImage = UIImage(data: data)
-                
-                //Cache the image
-                media.photoImage = photoImage
-                
-                completionHandler(image: photoImage, error: nil)
-               }
         }
     }
 }

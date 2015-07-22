@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "Around Me/MediaCollectionViewController.swift"
-            timestampString = "459163751.094345"
+            timestampString = "459266242.142059"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "fetchRecentDataFromInstagram()"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "controllerDidChangeContent(_:)"
             landmarkType = "5">
             <Actions>
                <BreakpointActionProxy
@@ -25,102 +25,6 @@
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Around Me/MediaCollectionViewController.swift"
-            timestampString = "459163760.750116"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "fetchRecentDataFromInstagram()"
-            landmarkType = "5">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
-                  <ActionContent
-                     consoleCommand = "po self.refreshControl.refreshing">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Around Me/MapViewController.swift"
-            timestampString = "459177655.422628"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
-            landmarkName = "fetchRecentDataFromInstagram()"
-            landmarkType = "5">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Sound">
-                  <ActionContent
-                     soundName = "Tink">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Around Me/AuthenticateViewController.swift"
-            timestampString = "459182794.048157"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "webView(_:didFailLoadWithError:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Around_Me.AuthenticateViewController.webView (Around_Me.AuthenticateViewController)(ObjectiveC.UIWebView, didFailLoadWithError : ObjectiveC.NSError) -&gt; ()"
-                  moduleName = "Around Me"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/raphaelneuenschwander/Udacity/Projects/My%20Own%20App/Around%20Me/Around%20Me/AuthenticateViewController.swift"
-                  timestampString = "459182794.819222"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "430">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Around_Me.AuthenticateViewController.(webView (Around_Me.AuthenticateViewController) -&gt; (ObjectiveC.UIWebView, didFailLoadWithError : ObjectiveC.NSError) -&gt; ()).(closure #1)"
-                  moduleName = "Around Me"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/raphaelneuenschwander/Udacity/Projects/My%20Own%20App/Around%20Me/Around%20Me/AuthenticateViewController.swift"
-                  timestampString = "459182794.819432"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

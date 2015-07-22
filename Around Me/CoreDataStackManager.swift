@@ -91,7 +91,7 @@ class CoreDataStackManager {
             var error: NSError? = nil
             
             if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                NSLog("Unresolved error \(error?.description), \(error!.userInfo)")
                 abort()
             }
         }
