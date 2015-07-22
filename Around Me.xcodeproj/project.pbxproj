@@ -105,19 +105,13 @@
 		F6EA0B171B4D01CE00E4088E /* Around Me */ = {
 			isa = PBXGroup;
 			children = (
-				F6E77C611B515DDA004AA142 /* CoreDataStackManager.swift */,
-				F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */,
-				F6EA0B1C1B4D01CE00E4088E /* AuthenticateViewController.swift */,
-				F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */,
-				F6E497831B54F0270058EF44 /* MediaCollectionViewController.swift */,
-				F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */,
-				F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */,
 				F6EA0B1E1B4D01CE00E4088E /* Main.storyboard */,
-				F6EBE7331B5FF02E00D26396 /* MediaDetailWebViewController.swift */,
-				F6EA0B211B4D01CE00E4088E /* Images.xcassets */,
-				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
-				F6F3CBB71B5D35BD00D2E32F /* Time.swift */,
+				F6EBE7351B6024A900D26396 /* Controllers */,
+				F6EBE7361B60251000D26396 /* View */,
+				F6EA0B1A1B4D01CE00E4088E /* AppDelegate.swift */,
+				F6E77C611B515DDA004AA142 /* CoreDataStackManager.swift */,
 				F6E77C581B4FE19D004AA142 /* LastKnownMapRegion.swift */,
+				F6F3CBB71B5D35BD00D2E32F /* Time.swift */,
 				F6EA0B181B4D01CE00E4088E /* Supporting Files */,
 				F6EA0B3C1B4D444D00E4088E /* Instagram */,
 			);
@@ -127,6 +121,8 @@
 		F6EA0B181B4D01CE00E4088E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F6EA0B211B4D01CE00E4088E /* Images.xcassets */,
+				F6EA0B231B4D01CE00E4088E /* LaunchScreen.xib */,
 				F6EA0B191B4D01CE00E4088E /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -160,6 +156,26 @@
 				F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */,
 			);
 			name = Instagram;
+			sourceTree = "<group>";
+		};
+		F6EBE7351B6024A900D26396 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F6EA0B1C1B4D01CE00E4088E /* AuthenticateViewController.swift */,
+				F6EA0BA91B4EB7ED00E4088E /* MapViewController.swift */,
+				F6E497831B54F0270058EF44 /* MediaCollectionViewController.swift */,
+				F6F3CBB51B5CCF0400D2E32F /* MediaDetailPopOverViewController.swift */,
+				F6EBE7331B5FF02E00D26396 /* MediaDetailWebViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		F6EBE7361B60251000D26396 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F6E497851B54FD370058EF44 /* MediaCollectionViewCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
