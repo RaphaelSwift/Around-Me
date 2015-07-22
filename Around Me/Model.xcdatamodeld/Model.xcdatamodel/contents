@@ -9,9 +9,10 @@
         <attribute name="imagePathStandardRes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePathThumbnail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Media" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Media" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>
 </model>

@@ -10,6 +10,8 @@ import Foundation
 import MapKit
 import CoreData
 
+/* The Media object entity */
+
 @objc(Media)
 
 class Media: NSManagedObject, MKAnnotation {
@@ -36,6 +38,7 @@ class Media: NSManagedObject, MKAnnotation {
         static let Text = "text"
         static let User = "user"
         static let FullName = "full_name"
+        static let Link = "link"
     }
     
     @NSManaged var createdTime: String
@@ -47,6 +50,7 @@ class Media: NSManagedObject, MKAnnotation {
     @NSManaged var id: String
     @NSManaged var captionText: String?
     @NSManaged var fullName: String
+    @NSManaged var link: String
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -65,7 +69,6 @@ class Media: NSManagedObject, MKAnnotation {
         
         latitude = locationDictionary[Media.Keys.Latitude] as! Double
         longitude = locationDictionary[Media.Keys.Longitude] as! Double
-        
         
         // Retrieve the image paths
         let imagesDictionary = dictionary[Media.Keys.Images] as! [String: AnyObject]
@@ -87,18 +90,20 @@ class Media: NSManagedObject, MKAnnotation {
         // Retrieve the name of the user
         let userDictionary = dictionary[Media.Keys.User] as! [String:AnyObject]
         fullName = userDictionary[Media.Keys.FullName] as! String
+        
+        // Retrieve the Instagram link
+        link = dictionary[Media.Keys.Link] as! String
     
     }
     
-    // MKAnnotation
+    // MKAnnotation - makes it conform to MKAnnotation protocol
     var coordinate: CLLocationCoordinate2D {
         let coord = CLLocationCoordinate2D(latitude: latitude as! Double, longitude: longitude as! Double)
         
         return coord
     }
     
-    
-    // When the context is saved, we want to check if the object has been deleted, if it has effectively been, we want to remove it from the cache and document directory as well
+    // When the context is saved, check if an object has been deleted, if yes, remove the corresponding image in cache and document directory
     override func didSave() {
         
         if self.deleted {
@@ -120,18 +125,4 @@ class Media: NSManagedObject, MKAnnotation {
             }
         }
     }
-    
-    var photoImageStandardResolution: UIImage? {
-        
-        get {
-            return InstagramClient.Caches.imageCache.imageWithIdentifier(imagePathStandardRes)
-        }
-        
-        set {
-            if let imagePathStandardRes = imagePathStandardRes {
-            InstagramClient.Caches.imageCache.storeImage(newValue, withIdentifier: imagePathStandardRes)
-            }
-        }
-    }
-    
 }

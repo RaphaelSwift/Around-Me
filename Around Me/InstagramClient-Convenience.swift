@@ -81,7 +81,6 @@ extension InstagramClient {
     }
 
 
-
     func downloadAndStoreImages(media: Media, imageResolution: Media.Resolution, completionHandler: (image: UIImage?, error: NSError?) -> Void ){
         
         switch imageResolution {

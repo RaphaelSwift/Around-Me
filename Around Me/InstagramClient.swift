@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 
+
 @objc protocol InstagramClientDelegate {
     
     optional func didFinishAuthenticate()
@@ -66,7 +67,7 @@ class InstagramClient: NSObject {
     }
     
 
-    //MARK: GET Method
+    //MARK: - GET Method
     
     func taskForGetMethod(parameters: [String:AnyObject], method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
@@ -133,7 +134,6 @@ class InstagramClient: NSObject {
         task.resume()
         return task
     }
-
     
     
     //MARK: - Shared Instance

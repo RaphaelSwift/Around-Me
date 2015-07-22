@@ -20,7 +20,6 @@ class LastKnownMapRegion {
         return url.URLByAppendingPathComponent("lastKnownMapRegionArchive").path!
     }
     
-    
     func saveRegion(region:MKCoordinateRegion) {
         
         let regionAttributes = [
@@ -31,7 +30,6 @@ class LastKnownMapRegion {
         ]
         
         NSKeyedArchiver.archiveRootObject(regionAttributes, toFile: filePath)
-        
     }
     
     func restoreRegion() -> MKCoordinateRegion? {
@@ -52,7 +50,5 @@ class LastKnownMapRegion {
             
             return nil
         }
-        
     }
-    
 }

@@ -11,7 +11,6 @@ import UIKit
 class MediaDetailPopOverViewController: UIViewController {
 
     @IBOutlet weak var mediaImageView: UIImageView!
-    
     @IBOutlet weak var mediaCaptionTextLabel: UILabel!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
     
@@ -21,33 +20,32 @@ class MediaDetailPopOverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.becomeFirstResponder()
-
-        
+        mediaCaptionTextLabel.alpha = 0.0
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        mediaCaptionTextLabel.alpha = 0.0
     
         let time = Time(unixTimeStamp: media.createdTime)
         
         if let elapsedTimeSinceMediaHasBeenPosted = time.elapsedTime() {
-            self.elapsedTimeLabel.text = elapsedTimeSinceMediaHasBeenPosted 
+            
+            self.elapsedTimeLabel.text = elapsedTimeSinceMediaHasBeenPosted
+            
             if !media.fullName.isEmpty {
                 self.elapsedTimeLabel.text! += " by \(media.fullName)"
             }
         }
         
         mediaImageView.image =  mediaImage
+        
         if let mediaText = media.captionText {
             mediaCaptionTextLabel.text = mediaText
+            
         } else {
             mediaCaptionTextLabel.text = time.getTime()
         }
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)

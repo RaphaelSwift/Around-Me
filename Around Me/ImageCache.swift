@@ -36,7 +36,6 @@ class ImageCache {
         }
         
         return nil
-        
     }
     
     
@@ -59,7 +58,6 @@ class ImageCache {
         // And in documents directory
         let data = UIImagePNGRepresentation(image!)
         data.writeToFile(path, atomically: true)
-        
     }
     
     //MARK: - Delete images
@@ -84,7 +82,7 @@ class ImageCache {
         }
     }
     
-    // Helper
+    //MARK: - Helper
     
     func pathForIdentifier(identifier: String) -> String {
         

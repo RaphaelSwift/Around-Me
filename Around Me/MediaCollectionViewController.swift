@@ -14,8 +14,9 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     
     let refreshControl = UIRefreshControl()
-    
     var refreshTimer = NSTimer()
+    var lastMediaCellSelected: Media!
+    var tapGestureRecognizer: UIGestureRecognizer? = nil
     
     let refreshRate = 10.0
     let maxMediaObjectsToDisplay = 50
@@ -25,12 +26,17 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     var deletedIndexPaths : [NSIndexPath]!
     var updatedIndexPaths : [NSIndexPath]!
     
+    // Convenience lazy context var, for easy access to the shared Managed Object Context
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "displayDetails:")
         fetchedResultController.delegate = self
         
         var fetchError: NSError? = nil
@@ -41,7 +47,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
             //Handle error here
         }
         
-        // We want to be able to refresh even if the collection is not big enough to have an active scrollbar
+        // Refresh even if the collection is not big enough to have an active scrollbar
         self.mediaCollectionView.alwaysBounceVertical = true
         
         // Implement a refresh when the user pull buttom on the collection view.
@@ -52,21 +58,13 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        
-        // Start the timer
         self.startTimer()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     override func viewDidLayoutSubviews() {
-        // Lay out the collection view so that cells take up 1/3 of the width,
-        // with no space in between.de
         
+        // Lay out the collection view so that cells take up 1/3 of the width,
+        // with no space in between
         let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         layout.minimumLineSpacing = 1
@@ -78,21 +76,15 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         mediaCollectionView.collectionViewLayout = layout
     }
     
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         
         refreshTimer.invalidate()
     }
     
-    
-    // Convenience lazy context var, for easy access to the shared Managed Object Context
-    lazy var sharedContext: NSManagedObjectContext = {
-        return CoreDataStackManager.sharedInstance().managedObjectContext!
-        }()
-    
-    
+
     //MARK: - Core Data
+    
     lazy var fetchedResultController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Media")
@@ -105,15 +97,9 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         return fetchedResultController
         
         }()
-
     
-    //MARK: - Timer
     
-    func startTimer() {
-        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagramTriggeredByTimer", userInfo: nil, repeats: true)
-    }
-    
-    //MARK: UICollectionViewDelegate, UICollectionViewDataSource
+    //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return fetchedResultController.sections?.count ?? 0
@@ -128,14 +114,12 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = mediaCollectionView.dequeueReusableCellWithReuseIdentifier("MediaViewCell", forIndexPath: indexPath) as! MediaCollectionViewCell
-        
         let media = fetchedResultController.objectAtIndexPath(indexPath) as! Media
         
         configureCell(cell, media: media)
         
         return cell
     }
-    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
@@ -146,6 +130,12 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         let controller = storyboard?.instantiateViewControllerWithIdentifier("MediaDetailPopOverViewController") as! MediaDetailPopOverViewController
         controller.modalPresentationStyle = UIModalPresentationStyle.Popover
         controller.preferredContentSize = CGSizeMake(200, 200)
+        
+        //Add a gesture recognizer to the popover controller's view
+        controller.view.addGestureRecognizer(tapGestureRecognizer!)
+        
+        //Set the lastMediaCellSelected, to be used when segueing to MediaDetailWebViewController
+        lastMediaCellSelected = media
         
         let popOverController = controller.popoverPresentationController
         popOverController?.delegate = self
@@ -169,63 +159,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         
     }
     
-    func configureCell(mediaImageCell: MediaCollectionViewCell, media: Media) {
-        
-        mediaImageCell.imageView.image = UIImage(named: "Placeholder")
-        
-        // If the image has already been downloaded, display it
-        if let photo = media.photoImage {
-            mediaImageCell.imageView.image = photo
-        }
-        
-        else {
-            
-            // Else, download it
-            InstagramClient.sharedInstance().downloadAndStoreImages(media, imageResolution: Media.Resolution.Thumbnail) { image, error in
-                if let error = error {
-                    //Handle error
-                }
-                else {
-                    
-                    //And display it
-                    dispatch_async(dispatch_get_main_queue()) {
-                        mediaImageCell.imageView.image = image
-                    }
-                }
-            }
-        }
-    }
-    
-    
-    //MARK: UIRefreshControl
 
-    func fetchRecentDataFromInstagramTriggeredByTimer() {
-        
-        // Check if a refresh is already in progress and if not fetch new media data
-        if !refreshControl.refreshing {
-            self.refreshControl.beginRefreshing()
-            fetchRecentDataFromInstagram()
-        }
-    }
     
-    func fetchRecentDataFromInstagram() {
-        
-        self.deleteExceedingMediaObjects()
-        
-        InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.refreshControl.endRefreshing()
-            }
-            
-            if let error = error {
-                //handle error here
-                if error.code == -1001 {
-                    self.displayAlertController("The request timed out. Please check your internet connectivity", networkError: true)
-                }
-            }
-        }
-    }
     
     //MARK: - Add NSFetchedResultsControllerDelegate methods
     
@@ -262,9 +197,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
             
         default :
             break
-            
         }
-        
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -287,10 +220,9 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
                 }
                 
                 }, completion: nil)
-            
         }
-        
     }
+    
     
     //MARK: - UIAdaptivePresentationControllerDelegate
     
@@ -300,8 +232,66 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
 
 
-    //MARK: - Helpers
+    //MARK: - Helpers & convenience
     
+    func configureCell(mediaImageCell: MediaCollectionViewCell, media: Media) {
+        
+        mediaImageCell.imageView.image = UIImage(named: "Placeholder")
+        
+        // If the image has already been downloaded, display it
+        if let photo = media.photoImage {
+            mediaImageCell.imageView.image = photo
+        }
+            
+        else {
+            
+            // Else, download it
+            InstagramClient.sharedInstance().downloadAndStoreImages(media, imageResolution: Media.Resolution.Thumbnail) { image, error in
+                if let error = error {
+                    //Handle error
+                }
+                else {
+                    
+                    //And display it
+                    dispatch_async(dispatch_get_main_queue()) {
+                        mediaImageCell.imageView.image = image
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchRecentDataFromInstagramTriggeredByTimer() {
+        
+        // Check if a refresh is already in progress and if not fetch new media data
+        if !refreshControl.refreshing {
+            self.refreshControl.beginRefreshing()
+            fetchRecentDataFromInstagram()
+        }
+    }
+    
+    func fetchRecentDataFromInstagram() {
+        
+        self.deleteExceedingMediaObjects()
+        
+        InstagramClient.sharedInstance().getMediaAtUserCoordinateFromInstagram(getLatestCreatedTime()) { success, error in
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.refreshControl.endRefreshing()
+            }
+            
+            if let error = error {
+                //handle error here
+                if error.code == -1001 {
+                    self.displayAlertController("The request timed out. Please check your internet connectivity", networkError: true)
+                }
+            }
+        }
+    }
+    
+    func startTimer() {
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(self.refreshRate, target: self , selector: "fetchRecentDataFromInstagramTriggeredByTimer", userInfo: nil, repeats: true)
+    }
     
     // This method retrieve the created time of the latest media
     func getLatestCreatedTime() -> String? {
@@ -315,7 +305,6 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         return nil
     }
-    
     
     // Check the number of media objects and delete the ones exceeding the maximum limit, deleting the oldest ones...
     func deleteExceedingMediaObjects() {
@@ -339,7 +328,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
     }
     
-    //MARK: UIAlertController
+    
+    //MARK: - UIAlertController
     
     func displayAlertController(errorMessage:String, networkError: Bool) {
         
@@ -350,6 +340,15 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         alert.addAction(action)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func displayDetails(recognizer: UITapGestureRecognizer) {
+        
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("MediaDetailWebViewController") as! MediaDetailWebViewController
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        controller.url = lastMediaCellSelected.link
+        presentViewController(controller, animated: true, completion: nil)
+        
     }
 
 }

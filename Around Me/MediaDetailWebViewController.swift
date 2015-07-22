@@ -8,28 +8,44 @@
 
 import UIKit
 
-class MediaDetailWebViewController: UIViewController {
+class MediaDetailWebViewController: UIViewController, UIWebViewDelegate {
+    
+    var url: String?
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var webView: UIWebView!
+        {
+        didSet {
+            webView.delegate = self
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        let nsurl = NSURL(string: "https://instagram.com/p/5cNAoXM1b5/")
+        let nsurl = NSURL(string: url!)
         
         let request = NSURLRequest(URL: nsurl!)
         
         webView.loadRequest(request)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     @IBAction func backTouchUpInside(sender: UIButton) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    //MARK: - UIWebViewDelegate
+    
+    func webViewDidStartLoad(webView: UIWebView) {
+        activityIndicator.startAnimating()
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        activityIndicator.stopAnimating()
+    }
+    
 }

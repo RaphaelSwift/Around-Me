@@ -152,11 +152,11 @@
 		F6EA0B3C1B4D444D00E4088E /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
-				F6E77C5A1B515724004AA142 /* Media.swift */,
-				F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */,
-				F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */,
-				F6EA0B3A1B4D443300E4088E /* InstagramClient.swift */,
 				F6E77C5E1B515DC4004AA142 /* Model.xcdatamodeld */,
+				F6E77C5A1B515724004AA142 /* Media.swift */,
+				F6EA0B3A1B4D443300E4088E /* InstagramClient.swift */,
+				F6EA0B6F1B4E5E4D00E4088E /* InstagramClient-Convenience.swift */,
+				F6EA0B3D1B4D5DC500E4088E /* InstagramClient-Constants.swift */,
 				F6ECA7AE1B53B5CC00663B33 /* ImageCache.swift */,
 			);
 			name = Instagram;

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* Initialized with a unixTimeStamp, it can convert it to a date and calculate the elapsed time */
 
 class Time {
     

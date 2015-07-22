@@ -23,9 +23,11 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, Instagram
         }
     }
     
+    
+    //MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         InstagramClient.sharedInstance().delegate = self
         
@@ -34,22 +36,13 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, Instagram
         connectionLabel.alpha = 0.0
         cancelButton.hidden = true
         
-    }
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        
-        
         // Design the Sign In button & UIView background
-        
         signWithInstagramButton.backgroundColor = UIColor(red:0/255, green:64/255, blue:128/255, alpha:1)
-        
         signWithInstagramButton.layer.cornerRadius = 5
-
         uiView.backgroundColor = UIColor(red:0/255, green:64/255, blue:128/255, alpha:0.3)
-        
     }
-    
 
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
@@ -58,37 +51,36 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, Instagram
             
             let myController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
             self.presentViewController(myController, animated: true, completion: nil)
-            
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
 
     //MARK: - Actions
     
     @IBAction func authenticate() {
         
         //UIApplication.sharedApplication().openURL(NSURL(string: InstagramClient.sharedInstance().authenticateURL)!)
-        
         let request = NSURLRequest(URL: NSURL(string: InstagramClient.sharedInstance().authenticateURL)!)
         self.authenticateWebView.loadRequest(request)
     
     }
+    
     
     @IBAction func cancelTouchUpInside() {
         self.authenticateWebView.stopLoading()
         self.authenticateWebView.hidden = true
         self.cancelButton.hidden = true
     }
+    
+    
     // MARK: - InstagramClientDelegate
+    
     func didFinishAuthenticate() {
         
         let myController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
         self.presentViewController(myController, animated: true, completion: nil)
     }
+    
     
     //MARK: - UIWebViewDelegate
     
