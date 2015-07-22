@@ -9,11 +9,18 @@
 import UIKit
 
 
+@objc protocol AppDelegateDelegate {
+    
+    optional func didAuthenticate(token: String?)
+
+}
+
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var delegate:AppDelegateDelegate?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -24,10 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         
         // We extract the code value recieved from Instagram and pass it to our model
-        let value = self.extractCode("\(url)")
+        let tokenString = self.extractCode("\(url)")
         
-        InstagramClient.sharedInstance().tokenValue = value
+        InstagramClient.sharedInstance().tokenValue = tokenString
         InstagramClient.sharedInstance().authenticated = true
+        
+        delegate?.didAuthenticate!(tokenString)
         
         return true
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthenticateViewController: UIViewController, UIWebViewDelegate, InstagramClientDelegate {
+class AuthenticateViewController: UIViewController, UIWebViewDelegate, AppDelegateDelegate, InstagramClientDelegate {
     
     @IBOutlet var uiView: UIView!
     @IBOutlet weak var signWithInstagramButton: UIButton!
@@ -27,7 +27,9 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, Instagram
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        InstagramClient.sharedInstance().delegate = self
+        let appDelegate = AppDelegate()
+        appDelegate.delegate = self
+        
         connectionLabel.text = "Could not open Instagram authentication page, please check your internet connectivity and try again..."
         connectionLabel.textColor = UIColor.whiteColor()
         connectionLabel.alpha = 0.0
@@ -89,6 +91,10 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, Instagram
         self.presentViewController(myController, animated: true, completion: nil)
     }
     
+    // MARK: - AppDelegateDelegate
+    func didAuthenticate(token: String?) {
+        InstagramClient.sharedInstance().
+    }
     
     //MARK: - UIWebViewDelegate
     

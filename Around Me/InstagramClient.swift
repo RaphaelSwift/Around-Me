@@ -26,22 +26,6 @@ class InstagramClient: NSObject {
     var delegate:InstagramClientDelegate?
     weak var dataSource: InstagramClientDataSource?
     
-    // Set the region radius
-    //var regionRadius: CLLocationDistance = 3000
-    
-//    // Set the searchRadius
-//    var searchRadius: Int {
-//        
-//        get {
-//            let radius = Int(regionRadius / 1.5)
-//            return radius
-//        }
-//        set {
-//            regionRadius = Double(newValue) * 1.5
-//        }
-//    }
-    
-    
     // Shared Session
     var session: NSURLSession
     
