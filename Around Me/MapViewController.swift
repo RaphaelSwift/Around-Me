@@ -28,7 +28,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let searchRadiusKey = "searchRadius"
     
     // Used when segueing to MediaDetailWebViewController
-    var lastMediaPinSelected: Media!
+    var lastMediaPinSelected: Media?
 
     // The overlay currently displayed
     var currentOverlay: MKOverlay?
@@ -242,7 +242,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         controller.view.addGestureRecognizer(tapGestureRecognizer!)
         
         //Set the lastMediaPinSelected, to be used when segueing to MediaDetailWebViewController
-        lastMediaPinSelected = view.annotation as! Media
+        lastMediaPinSelected = view.annotation as? Media
         
         let popOverController = controller.popoverPresentationController
         popOverController?.delegate = self
@@ -475,7 +475,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         let controller = storyboard!.instantiateViewControllerWithIdentifier("MediaDetailWebViewController") as! MediaDetailWebViewController
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-        controller.url = lastMediaPinSelected.link
+        
+        controller.url = lastMediaPinSelected!.link
         presentViewController(controller, animated: true, completion: nil)
 
     }

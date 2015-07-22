@@ -69,7 +69,7 @@ class InstagramClient: NSObject {
 
     //MARK: - GET Method
     
-    func taskForGetMethod(parameters: [String:AnyObject], method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+   func taskForGetMethod(parameters: [String:AnyObject], method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         //1. Set the parameters
         var mutableParameters = parameters
@@ -149,13 +149,13 @@ class InstagramClient: NSObject {
     
     //MARK: - NSKeyedArichver
     
-    func saveAccessToken(accessToken: String) {
+   private func saveAccessToken(accessToken: String) {
         
         NSKeyedArchiver.archiveRootObject(accessToken, toFile: filePath)
     }
     
     //Return true if an access token exists at this path
-    func restoreAccessToken() -> String? {
+   private func restoreAccessToken() -> String? {
         
         if let accessToken = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? String {
             
@@ -174,7 +174,7 @@ class InstagramClient: NSObject {
     //MARK: - Helpers
     
     // Helper function, given a dictionary of parameters, convert to a string for a URL
-    func escapedParameters(parameters: [String:AnyObject]) -> String {
+   private func escapedParameters(parameters: [String:AnyObject]) -> String {
         
         var urlVars = [String]()
         

@@ -291,13 +291,25 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rKZ-zk-gAm">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load Instagram page, please check your internet connectivity and try again..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXK-Nh-lFg">
+                                <rect key="frame" x="111" y="276" width="379" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="379" id="nlP-fU-ZOy"/>
+                                    <constraint firstAttribute="height" constant="47" id="rgN-TB-Kkj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.25098040699958801" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gfN-9m-Zoy" firstAttribute="top" secondItem="KGC-AP-sgL" secondAttribute="bottom" id="38k-k0-AWv"/>
                             <constraint firstAttribute="trailing" secondItem="Z2h-mB-P6C" secondAttribute="trailing" id="4Aq-cG-IjH"/>
                             <constraint firstAttribute="centerY" secondItem="rKZ-zk-gAm" secondAttribute="centerY" id="5VL-iS-9R0"/>
+                            <constraint firstAttribute="centerY" secondItem="uXK-Nh-lFg" secondAttribute="centerY" id="9xZ-Qq-mUl"/>
                             <constraint firstAttribute="centerX" secondItem="rKZ-zk-gAm" secondAttribute="centerX" id="BU0-Kv-Zmm"/>
+                            <constraint firstAttribute="centerX" secondItem="uXK-Nh-lFg" secondAttribute="centerX" id="CVb-mS-43u"/>
                             <constraint firstItem="Z2h-mB-P6C" firstAttribute="top" secondItem="gfN-9m-Zoy" secondAttribute="bottom" constant="8" id="E2g-5E-MXX"/>
                             <constraint firstItem="CrE-r3-aRa" firstAttribute="top" secondItem="Z2h-mB-P6C" secondAttribute="bottom" id="FfG-m0-wh8"/>
                             <constraint firstItem="Z2h-mB-P6C" firstAttribute="leading" secondItem="zbw-7e-HHz" secondAttribute="leading" id="ZJo-Ru-w1R"/>
@@ -306,6 +318,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="rKZ-zk-gAm" id="atO-9g-Pcs"/>
+                        <outlet property="connectivityProblemLabel" destination="uXK-Nh-lFg" id="eXp-tL-btT"/>
                         <outlet property="webView" destination="Z2h-mB-P6C" id="IVv-5S-Yhg"/>
                     </connections>
                 </viewController>

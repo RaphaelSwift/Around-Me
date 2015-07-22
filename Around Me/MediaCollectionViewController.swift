@@ -143,10 +143,13 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         // Get the center position of the selected cell
         let attributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)
-        let cellPoint = attributes?.center
+        let cellPointCenter = attributes?.center
+        let contentOffSet = collectionView.contentOffset
+        let relativeCellCenterX = (-1 * contentOffSet.x) + cellPointCenter!.x + collectionView.frame.origin.x
+        let relativeCellCenterY = (-1 * contentOffSet.y) + cellPointCenter!.y + collectionView.frame.origin.y
         
         // We want to position the popover on the cell that was selected
-        popOverController?.sourceRect = CGRectMake(CGFloat(cellPoint!.x), CGFloat(cellPoint!.y), 0, 0)
+        popOverController?.sourceRect = CGRectMake(relativeCellCenterX, relativeCellCenterY, 0, 0)
         
         if let photo = media.photoImage {
             controller.mediaImage = photo

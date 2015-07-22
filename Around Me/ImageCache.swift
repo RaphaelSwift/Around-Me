@@ -84,7 +84,7 @@ class ImageCache {
     
     //MARK: - Helper
     
-    func pathForIdentifier(identifier: String) -> String {
+   private func pathForIdentifier(identifier: String) -> String {
         
         // character "/" is not allowed in a filename, thus we have to replace it by a allowed character , see function for detail
         let escapedIdentifier = escapedCharacters(identifier)
@@ -95,7 +95,7 @@ class ImageCache {
         return fullPathUrl.path!
     }
     
-    func escapedCharacters (string: String) -> String {
+   private func escapedCharacters (string: String) -> String {
         
         return string.stringByReplacingOccurrencesOfString("/", withString: "_", options: NSStringCompareOptions.LiteralSearch)
     }

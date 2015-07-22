@@ -31,7 +31,7 @@ extension InstagramClient {
         }
     }
     
-    func getMediaFromInstagramAtGivenLocation(distanceInMeters distance: Int, latitude: Double, longitude: Double, minTimeStamp: String?, completionHandler: (success: Bool, error: NSError?) -> Void ) {
+    private func getMediaFromInstagramAtGivenLocation(distanceInMeters distance: Int, latitude: Double, longitude: Double, minTimeStamp: String?, completionHandler: (success: Bool, error: NSError?) -> Void ) {
         
         let method = Methods.MediaSearch
         
