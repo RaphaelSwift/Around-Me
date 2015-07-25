@@ -170,11 +170,15 @@
                                     <action selector="refreshTouchUpInside:" destination="5Cs-8w-mhx" eventType="touchUpInside" id="57N-Kz-g4f"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="X5p-gZ-J4u">
+                                <rect key="frame" x="281" y="281" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="rPq-f3-xUG" firstAttribute="leading" secondItem="5aH-s7-xnq" secondAttribute="trailing" constant="-62" id="329-BY-jAI"/>
                             <constraint firstItem="rPq-f3-xUG" firstAttribute="leading" secondItem="5aH-s7-xnq" secondAttribute="trailing" constant="-66" id="Dyj-qL-V72"/>
+                            <constraint firstAttribute="centerX" secondItem="X5p-gZ-J4u" secondAttribute="centerX" id="Ji9-pe-7yf"/>
                             <constraint firstItem="rPq-f3-xUG" firstAttribute="top" secondItem="SQ1-Im-v5M" secondAttribute="bottom" constant="8" id="NLN-2P-p5T"/>
                             <constraint firstItem="rPq-f3-xUG" firstAttribute="trailing" secondItem="AAt-yU-QhO" secondAttribute="trailingMargin" id="Nyx-T2-kQB"/>
                             <constraint firstItem="q6f-x9-JPw" firstAttribute="top" secondItem="5aH-s7-xnq" secondAttribute="bottom" constant="-49" id="Q9D-DX-DME"/>
@@ -183,6 +187,7 @@
                             <constraint firstItem="5aH-s7-xnq" firstAttribute="top" secondItem="AAt-yU-QhO" secondAttribute="top" constant="20" id="iUb-O8-1h4"/>
                             <constraint firstAttribute="trailing" secondItem="5aH-s7-xnq" secondAttribute="trailing" id="n5q-ec-f2j"/>
                             <constraint firstItem="5aH-s7-xnq" firstAttribute="top" secondItem="rPq-f3-xUG" secondAttribute="bottom" constant="-58" id="nmy-ia-Pzp"/>
+                            <constraint firstAttribute="centerY" secondItem="X5p-gZ-J4u" secondAttribute="centerY" id="qLU-Y7-zBg"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -195,6 +200,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="-1" image="UserMap" id="BJ4-MB-95S"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="X5p-gZ-J4u" id="Y2E-kS-fu7"/>
                         <outlet property="mapView" destination="5aH-s7-xnq" id="X3Q-8W-bQ2"/>
                         <outlet property="refreshButton" destination="rPq-f3-xUG" id="UJL-DV-5QL"/>
                         <outlet property="searchRadiusSlider" destination="rqg-Cj-uwH" id="ofn-4j-I5t"/>
@@ -219,13 +225,13 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Caption Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="zfs-uo-zEv">
                                 <rect key="frame" x="16" y="0.0" width="568" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ElapsedTime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="qXK-hX-xAw">
                                 <rect key="frame" x="16" y="0.0" width="568" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vb2-dK-bmS">

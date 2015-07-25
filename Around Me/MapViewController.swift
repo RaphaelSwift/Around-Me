@@ -15,7 +15,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var searchRadiusSlider: UISlider!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     var locationManager = CLLocationManager()
     let refreshControl = UIRefreshControl()
     var refreshTimer = NSTimer()
@@ -104,20 +105,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     @IBAction func sliderTouchUpInside(sender: UISlider) {
         
-        //1. Delete all the media that are not within the overlay
+        //1 Center the map on the user location with the new search radius
+        centerMapOnLocation(mapView.userLocation.location)
+        
+        //2. Delete all the media that are not within the overlay
         if let currentOverlay = self.currentOverlay {
             deleteOutOfRangeMediaObjects(self.currentOverlay!)
         }
         
-        //2. Fetch RecentDataFromInstagram
+        //3. Fetch RecentDataFromInstagram
         fetchRecentDataFromInstagram()
         
-        //3. Save the prefered search radius
+        //4. Save the prefered search radius
         userDefault.setFloat(sender.value, forKey: searchRadiusKey)
     }
     
     @IBAction func refreshTouchUpInside(sender: AnyObject) {
         
+        self.activityIndicator.startAnimating()
         fetchRecentDataFromInstagram()
     }
     
@@ -174,7 +179,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     
-    //MARK: - MKMapViewDelegate 
+    //MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
@@ -253,9 +258,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         popOverController?.sourceRect = CGRectMake(point.x, point.y, 0, 0)
         
         // Pass the data and present the popover controller
-        controller.mediaImage = view.image
-        controller.media = view.annotation as! Media
-        self.presentViewController(controller, animated: true, completion: nil)
+        if let viewImage = view.image, viewAnnotation = view.annotation as? Media {
+            controller.mediaImage = view.image
+            controller.media = view.annotation as? Media
+            self.presentViewController(controller, animated: true, completion: nil)
+            
+        }
+        mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
@@ -274,7 +283,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             //If an existing pin view was not available, create one
             if pinView == nil {
                 pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MediaPin")
-                
                 pinView?.image = UIImage(named: "Placeholder")
             }
             
@@ -384,6 +392,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 
                 self.refreshControl.endRefreshing()
                 
+                if self.activityIndicator.isAnimating(){
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.stopAnimating()
+                    }
+                }
+                
                 if let error = error {
                     
                     //Check for an internet connectivity error
@@ -407,7 +421,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return nil
     }
     
-    // Check the number of media objects and delete the ones exceeding the maximum limit, deleting the oldest ones...
+    // Check the number of media objects and delete the ones exceeding the maximum limit, deleting the oldest ones. They will be effectively deleted from the permanement store during the next refresh, which save the context.
     func deleteExceedingMediaObjects() {
         
         if let fetchedObjectsCount = fetchedResultController.fetchedObjects?.count {
@@ -423,8 +437,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
                 }
             }
-            //Save the context (ie. commit the changes)
-            CoreDataStackManager.sharedInstance().saveContext()
         }
     }
     
@@ -448,7 +460,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 }
             }
         }
-        
         //Save the context (ie. commit the changes)
         CoreDataStackManager.sharedInstance().saveContext()
     }

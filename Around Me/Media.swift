@@ -37,8 +37,9 @@ class Media: NSManagedObject, MKAnnotation {
         static let Caption = "caption"
         static let Text = "text"
         static let User = "user"
-        static let FullName = "full_name"
+        static let Username = "username"
         static let Link = "link"
+        static let LocationName = "name"
     }
     
     @NSManaged var createdTime: String
@@ -49,8 +50,9 @@ class Media: NSManagedObject, MKAnnotation {
     @NSManaged var imagePathStandardRes: String?
     @NSManaged var id: String
     @NSManaged var captionText: String?
-    @NSManaged var fullName: String
+    @NSManaged var username: String
     @NSManaged var link: String
+    @NSManaged var location: String?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -64,11 +66,13 @@ class Media: NSManagedObject, MKAnnotation {
         
         // Dictionary
         
-        // Retrieve the coordinates
+        // Retrieve the coordinates and location name if it exists
         let locationDictionary = dictionary[Media.Keys.Location] as! [String: AnyObject]
-        
+
         latitude = locationDictionary[Media.Keys.Latitude] as! Double
         longitude = locationDictionary[Media.Keys.Longitude] as! Double
+        location = locationDictionary[Media.Keys.LocationName] as? String
+
         
         // Retrieve the image paths
         let imagesDictionary = dictionary[Media.Keys.Images] as! [String: AnyObject]
@@ -89,7 +93,7 @@ class Media: NSManagedObject, MKAnnotation {
         
         // Retrieve the name of the user
         let userDictionary = dictionary[Media.Keys.User] as! [String:AnyObject]
-        fullName = userDictionary[Media.Keys.FullName] as! String
+        username = userDictionary[Media.Keys.Username] as! String
         
         // Retrieve the Instagram link
         link = dictionary[Media.Keys.Link] as! String

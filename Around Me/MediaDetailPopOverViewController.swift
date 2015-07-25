@@ -30,11 +30,8 @@ class MediaDetailPopOverViewController: UIViewController {
         
         if let elapsedTimeSinceMediaHasBeenPosted = time.elapsedTime() {
             
-            self.elapsedTimeLabel.text = elapsedTimeSinceMediaHasBeenPosted
-            
-            if !media.fullName.isEmpty {
-                self.elapsedTimeLabel.text! += " by \(media.fullName)"
-            }
+            self.elapsedTimeLabel.text = elapsedTimeSinceMediaHasBeenPosted + " by \(media.username)"
+
         }
         
         mediaImageView.image =  mediaImage
@@ -42,8 +39,8 @@ class MediaDetailPopOverViewController: UIViewController {
         if let mediaText = media.captionText {
             mediaCaptionTextLabel.text = mediaText
             
-        } else {
-            mediaCaptionTextLabel.text = time.getTime()
+        } else  {
+            mediaCaptionTextLabel.text = media.location ?? media.username
         }
     }
     

@@ -40,6 +40,10 @@ class AuthenticateViewController: UIViewController, UIWebViewDelegate, Instagram
         signWithInstagramButton.backgroundColor = UIColor(red:0/255, green:64/255, blue:128/255, alpha:1)
         signWithInstagramButton.layer.cornerRadius = 5
         uiView.backgroundColor = UIColor(red:0/255, green:64/255, blue:128/255, alpha:0.3)
+        
+        if InstagramClient.sharedInstance().tokenValue != nil {
+            self.signWithInstagramButton.hidden = true
+        }
     }
 
     

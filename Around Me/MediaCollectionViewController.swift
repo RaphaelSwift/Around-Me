@@ -309,7 +309,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         return nil
     }
     
-    // Check the number of media objects and delete the ones exceeding the maximum limit, deleting the oldest ones...
+    // Check the number of media objects and delete the ones exceeding the maximum limit, deleting the oldest ones. They will be effectively deleted from the permanement store during the next refresh, which save the context.
     func deleteExceedingMediaObjects() {
         
         if let fetchedObjectsCount = fetchedResultController.fetchedObjects?.count {
@@ -322,12 +322,8 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
                 for index in 1...numberOfObjectsToDelete {
                     
                     self.sharedContext.deleteObject(fetchedObjectToDelete.removeLast() as! Media)
-                    
                 }
             }
-            //Save the context (ie. commit the changes)
-            CoreDataStackManager.sharedInstance().saveContext()
-            
         }
     }
     
