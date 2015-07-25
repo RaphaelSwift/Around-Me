@@ -1,7 +1,7 @@
 #Around Me
 
 By: Raphael Neuenschwander
-	- neuenschwander.raphael@gmail.com
+- neuenschwander.raphael@gmail.com
 
 ##tl;dr
 
@@ -13,8 +13,8 @@ Requires an Instagram account to use.
 Requires that the user allows the application to locate him.
 
 Fetch new images automatically every 10 seconds. Refresh can also be done manually :
-	- On map view : By clicking on the refresh button
-	- In collection view: by pulling down the collection view
+- On map view : By clicking on the refresh button
+- In collection view: by pulling down the collection view
 
 The maximum media items that can be displayed is set at 50. 
 
@@ -31,4 +31,4 @@ For reports, bugs, remarks, critics, please do not hesitate to contact me.
 
 ##Compatibility:
 
-Only for iPhone - iPad not supported at the moment.
+Only for iPhone, iPad not supported for the moment.
