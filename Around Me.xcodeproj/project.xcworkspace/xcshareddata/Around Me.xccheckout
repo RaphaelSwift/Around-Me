@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4139C083-1737-4911-8A7B-1B6CABDBE505</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Around Me</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1282AA0769B081864136277CA5301A3DC4CAA44C</key>
+		<string>https://github.com/RaphaelSwift/Around-Me.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Around Me.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1282AA0769B081864136277CA5301A3DC4CAA44C</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/RaphaelSwift/Around-Me.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1282AA0769B081864136277CA5301A3DC4CAA44C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1282AA0769B081864136277CA5301A3DC4CAA44C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Around%20Me</string>
+		</dict>
+	</array>
+</dict>
+</plist>
