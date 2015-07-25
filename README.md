@@ -5,7 +5,7 @@ By: Raphael Neuenschwander
 
 ##tl;dr
 
-An Iphone application that search recent pictures and video posted by Instagram users around the user location. The images are displayed on a map and in a collection view.
+An iPhone application that search recent pictures and video posted by Instagram users around the user location. The images are displayed on a map and in a collection view.
 
 ##How to use
 
