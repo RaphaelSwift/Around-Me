@@ -129,7 +129,7 @@ class MediaCollectionViewController: UIViewController, UICollectionViewDelegate,
         //Present the image in a popover view controller
         let controller = storyboard?.instantiateViewControllerWithIdentifier("MediaDetailPopOverViewController") as! MediaDetailPopOverViewController
         controller.modalPresentationStyle = UIModalPresentationStyle.Popover
-        controller.preferredContentSize = CGSizeMake(200, 200)
+        controller.preferredContentSize = CGSizeMake(200, 220)
         
         //Add a gesture recognizer to the popover controller's view
         controller.view.addGestureRecognizer(tapGestureRecognizer!)
