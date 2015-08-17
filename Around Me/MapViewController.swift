@@ -278,21 +278,21 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if annotation.isKindOfClass(Media) {
             
             //Try to dequeue an existing pin view first
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("MediaPin") as? MKPinAnnotationView
+            var instagramPinView = mapView.dequeueReusableAnnotationViewWithIdentifier("MediaPin") as? MKPinAnnotationView
             
             //If an existing pin view was not available, create one
-            if pinView == nil {
-                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MediaPin")
-                pinView?.image = UIImage(named: "Placeholder")
+            if instagramPinView == nil {
+                instagramPinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MediaPin")
+                instagramPinView?.image = UIImage(named: "Placeholder")
             }
             
             else {
-                pinView?.annotation = annotation
+                instagramPinView?.annotation = annotation
             }
             
-            self.configurePinView(pinView, media: annotation as! Media)
+            self.configurePinView(instagramPinView, media: annotation as! Media)
             
-            return pinView
+            return instagramPinView
         }
         return nil
     }
@@ -300,11 +300,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     //MARK: - PinView Convenience Method
     
-    func configurePinView(pinView: MKPinAnnotationView?, media: Media) {
+    func configurePinView(instagramPinView: MKPinAnnotationView?, media: Media) {
         
         // If the image has already been downloaded, display it
         if let photo = media.photoImage {
-            pinView?.image = photo
+            instagramPinView?.image = photo
         }
         else {
             // Else, download it
@@ -315,15 +315,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 else {
                     //And display it
                     dispatch_async(dispatch_get_main_queue()) {
-                        pinView?.image = image
-                        pinView?.frame.size.height = 40
-                        pinView?.frame.size.width = 40
+                        instagramPinView?.image = image
+                        instagramPinView?.frame.size.height = 40
+                        instagramPinView?.frame.size.width = 40
                     }
                 }
             }
         }
-        pinView?.frame.size.width = 40
-        pinView?.frame.size.height = 40
+        instagramPinView?.frame.size.width = 40
+        instagramPinView?.frame.size.height = 40
     }
     
     
