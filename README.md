@@ -7,6 +7,10 @@ By: Raphael Neuenschwander
 
 An iPhone application that search recent pictures and video posted by Instagram users around the user location. The images are displayed on a map and in a collection view.
 
+Map | Images
+------------ | -------------
+![Image of the MapView](https://cloud.githubusercontent.com/assets/11804885/9793749/62f853e4-57e7-11e5-9934-fdbb18dfee4a.png) | ![Image of the CollectionView] (https://cloud.githubusercontent.com/assets/11804885/9793724/42869d8c-57e7-11e5-948b-e8b55d769ec9.png)
+
 ##How to use
 
 Requires an Instagram account to use.

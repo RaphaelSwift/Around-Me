@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>4139C083-1737-4911-8A7B-1B6CABDBE505</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Around Me</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>1282AA0769B081864136277CA5301A3DC4CAA44C</key>
 		<string>https://github.com/RaphaelSwift/Around-Me.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Around Me.xcodeproj</string>
+	<string>Around Me.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1282AA0769B081864136277CA5301A3DC4CAA44C</key>
